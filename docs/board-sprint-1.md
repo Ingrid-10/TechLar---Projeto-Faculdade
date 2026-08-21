@@ -1,5 +1,7 @@
 # Board — Sprint 1 (GitHub Projects)
 
+Board público: [Sprint 1 — Venda Assistida](https://github.com/users/Ingrid-10/projects/1)
+
 Histórias da AC1. Espelhar estes cards no GitHub Projects do repositório.
 
 ## Épico

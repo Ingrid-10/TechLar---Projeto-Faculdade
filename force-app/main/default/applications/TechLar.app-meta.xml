@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <brand>
-        <headerColor>#0B3A6A</headerColor>
-        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+        <headerColor>#EDB119</headerColor>
+        <logo>TechLar_logo</logo>
+        <logoVersion>1</logoVersion>
+        <shouldOverrideOrgTheme>true</shouldOverrideOrgTheme>
     </brand>
-    <description>TechLar 360 — venda assistida, atendimento, Customer 360 e Agentforce</description>
     <formFactors>Small</formFactors>
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
-    <label>TechLar 360</label>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
+    <label>TechLar</label>
     <navType>Standard</navType>
     <tabs>standard-home</tabs>
     <tabs>TechLar_Venda_Assistida</tabs>
     <tabs>standard-Account</tabs>
     <tabs>standard-Contact</tabs>
-    <tabs>standard-Order</tabs>
+    <tabs>standard-Case</tabs>
     <tabs>standard-Product2</tabs>
+    <tabs>standard-Pricebook2</tabs>
+    <tabs>standard-PricebookEntry</tabs>
+    <tabs>standard-Order</tabs>
     <uiType>Lightning</uiType>
+    <utilityBar>TechLar_UtilityBar</utilityBar>
 </CustomApplication>

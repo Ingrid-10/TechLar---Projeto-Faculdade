@@ -8,6 +8,8 @@ Interface LWC para o vendedor localizar ou cadastrar o cliente, montar o carrinh
 
 Documentação da sprint: [docs/sprint-1.md](docs/sprint-1.md)
 
+Board: [Sprint 1 — Venda Assistida](https://github.com/users/Ingrid-10/projects/1)
+
 Dados fictícios: [data/README.md](data/README.md)
 
 ## Pré-requisitos
@@ -23,10 +25,10 @@ sf org login web --alias techlar
 sf project deploy start --target-org techlar
 sf org assign permset --name TechLar_Vendedor --target-org techlar
 sf apex run --file scripts/apex/loadMockData.apex --target-org techlar
-sf org open --target-org techlar --path /lightning/app/c__TechLar360
+sf org open --target-org techlar --path /lightning/app/c__TechLar
 ```
 
-Abra o app **TechLar 360** e a aba **Nova Venda**.
+Abra o app **TechLar** e a aba **Nova Venda**.
 
 ## Stack
 
