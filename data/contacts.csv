@@ -1,0 +1,7 @@
+FirstName,LastName,Email,Phone,CPF__c,MailingStreet,MailingCity,MailingState,MailingPostalCode,MailingCountry
+Ana,Souza,ana.souza@techlar.example,11999990001,111.444.777-35,"Av. Paulista, 1000",São Paulo,SP,01310-100,Brazil
+Bruno,Lima,bruno.lima@techlar.example,21988880002,222.333.444-05,"Rua do Catete, 50",Rio de Janeiro,RJ,22220-000,Brazil
+Carla,Mendes,carla.mendes@techlar.example,31977770003,333.222.111-96,"Av. Afonso Pena, 200",Belo Horizonte,MG,30130-000,Brazil
+Diego,Alves,diego.alves@techlar.example,41966660004,444.555.666-77,"Rua XV de Novembro, 80",Curitiba,PR,80020-000,Brazil
+Elena,Rocha,elena.rocha@techlar.example,51955550005,555.666.777-88,"Av. Borges de Medeiros, 300",Porto Alegre,RS,90020-020,Brazil
+Felipe,Castro,felipe.castro@techlar.example,85944440006,666.777.888-99,"Av. Beira Mar, 150",Fortaleza,CE,60165-121,Brazil

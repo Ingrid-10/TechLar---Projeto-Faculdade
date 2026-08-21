@@ -1,0 +1,60 @@
+<template>
+    <div class="sales-shell">
+        <header class="sales-header">
+            <div>
+                <p class="eyebrow">TechLar 360</p>
+                <h1>Nova venda</h1>
+                <p class="subtitle">Venda assistida em loja física</p>
+            </div>
+            <lightning-button
+                if:true={confirmation}
+                label="Nova venda"
+                onclick={handleNewSale}
+                variant="neutral"
+            ></lightning-button>
+        </header>
+
+        <div if:true={errorMessage} class="slds-alert slds-alert_error slds-m-bottom_medium" role="alert">
+            {errorMessage}
+        </div>
+
+        <c-techlar-order-confirmation
+            if:true={confirmation}
+            confirmation={confirmation}
+            onopenorder={handleOpenOrder}
+            onnewsale={handleNewSale}
+        ></c-techlar-order-confirmation>
+
+        <template if:false={confirmation}>
+            <c-techlar-customer-search
+                selected-customer={customer}
+                oncustomerselected={handleCustomerSelected}
+            ></c-techlar-customer-search>
+
+            <c-techlar-product-search onproductadded={handleProductAdded}></c-techlar-product-search>
+
+            <c-techlar-shopping-cart
+                items={cartItems}
+                items-total={itemsTotal}
+                freight-total={freightTotal}
+                grand-total={grandTotal}
+                oncartchanged={handleCartChanged}
+            ></c-techlar-shopping-cart>
+
+            <c-techlar-delivery-options
+                delivery={delivery}
+                customer={customer}
+                ondeliverychanged={handleDeliveryChanged}
+            ></c-techlar-delivery-options>
+
+            <div class="footer-actions">
+                <lightning-button
+                    label="Finalizar venda"
+                    variant="brand"
+                    disabled={isSaving}
+                    onclick={handleFinalize}
+                ></lightning-button>
+            </div>
+        </template>
+    </div>
+</template>

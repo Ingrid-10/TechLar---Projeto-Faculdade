@@ -1,0 +1,49 @@
+<template>
+    <lightning-card title="Produtos" icon-name="standard:product" class="slds-m-top_medium">
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <div class="search-row">
+                <lightning-input
+                    type="search"
+                    label="Pesquisar produto"
+                    placeholder="Nome ou código"
+                    value={searchTerm}
+                    disabled={isDisabled}
+                    onchange={handleTermChange}
+                    onkeydown={handleKey}
+                ></lightning-input>
+                <lightning-button
+                    class="slds-m-top_large"
+                    label="Pesquisar"
+                    variant="brand"
+                    onclick={loadProducts}
+                    disabled={isDisabled}
+                ></lightning-button>
+            </div>
+
+            <p if:true={isDisabled} class="slds-text-color_weak slds-m-top_small">
+                Selecione um cliente para montar o carrinho.
+            </p>
+            <div if:true={errorMessage} class="slds-text-color_error slds-m-top_small">{errorMessage}</div>
+
+            <ul class="result-list">
+                <template for:each={results} for:item="row">
+                    <li key={row.pricebookEntryId} class="result-row">
+                        <div>
+                            <strong>{row.name}</strong>
+                            <span class="code">{row.productCode}</span>
+                        </div>
+                        <div class="price-add">
+                            <span class="price">{row.formattedPrice}</span>
+                            <lightning-button
+                                label="Adicionar"
+                                data-id={row.pricebookEntryId}
+                                onclick={handleAdd}
+                                disabled={isDisabled}
+                            ></lightning-button>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </lightning-card>
+</template>

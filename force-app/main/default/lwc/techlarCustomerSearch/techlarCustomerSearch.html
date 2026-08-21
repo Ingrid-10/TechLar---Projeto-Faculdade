@@ -1,0 +1,91 @@
+<template>
+    <lightning-card title="Cliente" icon-name="standard:contact">
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <div class="search-row">
+                <lightning-input
+                    type="search"
+                    label="Pesquisar cliente"
+                    placeholder="Nome, e-mail, telefone ou CPF"
+                    value={searchTerm}
+                    onchange={handleTermChange}
+                    onkeydown={handleKey}
+                ></lightning-input>
+                <lightning-button
+                    class="slds-m-top_large"
+                    label="Pesquisar"
+                    variant="brand"
+                    onclick={handleSearch}
+                    disabled={isLoading}
+                ></lightning-button>
+                <lightning-button
+                    class="slds-m-top_large"
+                    label="Novo cliente"
+                    onclick={toggleCreate}
+                ></lightning-button>
+            </div>
+
+            <div if:true={errorMessage} class="slds-text-color_error slds-m-top_small">{errorMessage}</div>
+
+            <template if:true={selectedCustomer}>
+                <div class="selected-box slds-m-top_medium">
+                    <p class="slds-text-heading_small">{selectedCustomer.name}</p>
+                    <p>{selectedCustomer.email}</p>
+                    <p>{selectedCustomer.phone} · CPF {selectedCustomer.cpf}</p>
+                </div>
+            </template>
+
+            <ul if:true={hasResults} class="slds-m-top_small result-list">
+                <template for:each={results} for:item="row">
+                    <li key={row.contactId}>
+                        <button class="result-btn" data-id={row.contactId} onclick={handleSelect}>
+                            <strong>{row.name}</strong>
+                            <span>{row.email} · {row.cpf}</span>
+                        </button>
+                    </li>
+                </template>
+            </ul>
+
+            <template if:true={showCreate}>
+                <div class="slds-m-top_medium">
+                    <p class="slds-text-title_caps slds-m-bottom_small">Cadastrar cliente</p>
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input label="Nome" data-field="firstName" value={draft.firstName} onchange={handleDraftChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input label="Sobrenome" data-field="lastName" value={draft.lastName} onchange={handleDraftChange} required></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input type="email" label="E-mail" data-field="email" value={draft.email} onchange={handleDraftChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input label="Telefone" data-field="phone" value={draft.phone} onchange={handleDraftChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input label="CPF" data-field="cpf" value={draft.cpf} onchange={handleDraftChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input label="CEP" data-field="mailingPostalCode" value={draft.mailingPostalCode} onchange={handleDraftChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-input label="Endereço" data-field="mailingStreet" value={draft.mailingStreet} onchange={handleDraftChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input label="Cidade" data-field="mailingCity" value={draft.mailingCity} onchange={handleDraftChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input label="UF" data-field="mailingState" value={draft.mailingState} onchange={handleDraftChange} maxlength="2"></lightning-input>
+                        </div>
+                    </div>
+                    <lightning-button
+                        class="slds-m-top_medium"
+                        label="Salvar cliente"
+                        variant="brand"
+                        onclick={handleCreate}
+                        disabled={isSaving}
+                    ></lightning-button>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

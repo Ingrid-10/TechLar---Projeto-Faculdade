@@ -1,0 +1,10 @@
+{
+  "orgName": "TechLar 360",
+  "edition": "Developer",
+  "features": ["Orders:true"],
+  "settings": {
+    "orderSettings": {
+      "enableOrders": true
+    }
+  }
+}

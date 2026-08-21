@@ -1,0 +1,62 @@
+<template>
+    <lightning-card title="Recebimento" icon-name="standard:address" class="slds-m-top_medium">
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <lightning-radio-group
+                name="modalidade"
+                label="Como o cliente receberá os produtos?"
+                options={options}
+                value={delivery.modalidadeRecebimento}
+                type="radio"
+                onchange={handleMode}
+            ></lightning-radio-group>
+
+            <template if:true={isDelivery}>
+                <div class="slds-grid slds-gutters slds-wrap slds-m-top_medium">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            label="CEP"
+                            data-field="shippingPostalCode"
+                            value={delivery.shippingPostalCode}
+                            onchange={handleField}
+                        ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2 slds-m-top_large">
+                        <lightning-button
+                            label="Buscar CEP"
+                            onclick={handleCep}
+                            disabled={isLookingCep}
+                        ></lightning-button>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning-input
+                            label="Endereço"
+                            data-field="shippingStreet"
+                            value={delivery.shippingStreet}
+                            onchange={handleField}
+                        ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            label="Cidade"
+                            data-field="shippingCity"
+                            value={delivery.shippingCity}
+                            onchange={handleField}
+                        ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            label="UF"
+                            data-field="shippingState"
+                            value={delivery.shippingState}
+                            maxlength="2"
+                            onchange={handleField}
+                        ></lightning-input>
+                    </div>
+                </div>
+                <p class="slds-m-top_small freight">{formattedFreight}</p>
+            </template>
+
+            <div if:true={errorMessage} class="slds-text-color_error slds-m-top_small">{errorMessage}</div>
+        </div>
+    </lightning-card>
+</template>

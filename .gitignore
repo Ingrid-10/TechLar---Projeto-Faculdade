@@ -1,0 +1,19 @@
+# Salesforce
+.sf/
+.sfdx/
+.localdevserver/
+.vscode/
+.idea/
+*.log
+.DS_Store
+
+# Dependencies
+node_modules/
+
+# Coverage / tests
+coverage/
+.nyc_output/
+
+# Env
+.env
+.env.local
