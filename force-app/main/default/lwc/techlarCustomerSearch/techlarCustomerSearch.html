@@ -1,5 +1,5 @@
 <template>
-    <lightning-card title="Cliente" icon-name="standard:contact">
+    <lightning-card title="Cliente" icon-name="standard:account">
         <div class="slds-p-horizontal_medium slds-p-bottom_medium">
             <div class="search-row">
                 <lightning-input
@@ -35,9 +35,9 @@
             </template>
 
             <ul if:true={hasResults} class="slds-m-top_small result-list">
-                <template for:each={results} for:item="row">
-                    <li key={row.contactId}>
-                        <button class="result-btn" data-id={row.contactId} onclick={handleSelect}>
+                <template for:each={results} for:item="row" for:index="index">
+                    <li key={row.accountId}>
+                        <button class="result-btn" data-index={index} onclick={handleSelect}>
                             <strong>{row.name}</strong>
                             <span>{row.email} · {row.cpf}</span>
                         </button>

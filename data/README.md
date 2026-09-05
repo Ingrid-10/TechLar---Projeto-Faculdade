@@ -6,9 +6,10 @@ Todos os registros são **fictícios**, criados para o projeto acadêmico TechLa
 
 ## Arquivos
 
-- `accounts.csv` — contas 1:1 com o cliente
+- `accounts.csv` — contas 1:1 com o cliente (amostra pequena)
 - `contacts.csv` — pessoas (CPF, e-mail, telefone, endereço)
-- `products.csv` — produtos do catálogo TechLar e preços do Standard Price Book
+- `products.csv` — produtos do catálogo TechLar (`ClienteTechLar__c`) e preços do Standard Price Book
+- [`inspector/`](inspector/) — import Salesforce Inspector: clientes (`01-accounts.csv`, `02-contacts.csv`) e produtos (`03-products.csv`, depois `04-pricebook-entries.csv`)
 
 ## Como carregar no org
 

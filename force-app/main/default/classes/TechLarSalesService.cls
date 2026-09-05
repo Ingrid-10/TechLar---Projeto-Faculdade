@@ -4,83 +4,110 @@ public with sharing class TechLarSalesService {
     public static final String MODALIDADE_ENTREGA = 'Entrega';
 
     public class CustomerDTO {
-        @AuraEnabled public Id contactId;
-        @AuraEnabled public Id accountId;
-        @AuraEnabled public String firstName;
-        @AuraEnabled public String lastName;
-        @AuraEnabled public String name;
-        @AuraEnabled public String email;
-        @AuraEnabled public String phone;
-        @AuraEnabled public String cpf;
-        @AuraEnabled public String mailingStreet;
-        @AuraEnabled public String mailingCity;
-        @AuraEnabled public String mailingState;
-        @AuraEnabled public String mailingPostalCode;
+        @AuraEnabled public Id contactId { get; set; }
+        @AuraEnabled public Id accountId { get; set; }
+        @AuraEnabled public String firstName { get; set; }
+        @AuraEnabled public String lastName { get; set; }
+        @AuraEnabled public String name { get; set; }
+        @AuraEnabled public String email { get; set; }
+        @AuraEnabled public String phone { get; set; }
+        @AuraEnabled public String cpf { get; set; }
+        @AuraEnabled public String mailingStreet { get; set; }
+        @AuraEnabled public String mailingCity { get; set; }
+        @AuraEnabled public String mailingState { get; set; }
+        @AuraEnabled public String mailingPostalCode { get; set; }
     }
 
     public class ProductDTO {
-        @AuraEnabled public Id pricebookEntryId;
-        @AuraEnabled public Id productId;
-        @AuraEnabled public String name;
-        @AuraEnabled public String productCode;
-        @AuraEnabled public String description;
-        @AuraEnabled public Decimal unitPrice;
+        @AuraEnabled public Id pricebookEntryId { get; set; }
+        @AuraEnabled public Id productId { get; set; }
+        @AuraEnabled public String name { get; set; }
+        @AuraEnabled public String productCode { get; set; }
+        @AuraEnabled public String description { get; set; }
+        @AuraEnabled public Decimal unitPrice { get; set; }
     }
 
     public class SaleItemRequest {
-        @AuraEnabled public Id pricebookEntryId;
-        @AuraEnabled public Decimal quantity;
+        @AuraEnabled public Id pricebookEntryId { get; set; }
+        @AuraEnabled public Decimal quantity { get; set; }
     }
 
     public class SaleRequest {
-        @AuraEnabled public Id contactId;
-        @AuraEnabled public String modalidadeRecebimento;
-        @AuraEnabled public String shippingStreet;
-        @AuraEnabled public String shippingCity;
-        @AuraEnabled public String shippingState;
-        @AuraEnabled public String shippingPostalCode;
-        @AuraEnabled public List<SaleItemRequest> items;
+        @AuraEnabled public Id accountId { get; set; }
+        @AuraEnabled public String modalidadeRecebimento { get; set; }
+        @AuraEnabled public String shippingStreet { get; set; }
+        @AuraEnabled public String shippingCity { get; set; }
+        @AuraEnabled public String shippingState { get; set; }
+        @AuraEnabled public String shippingPostalCode { get; set; }
+        @AuraEnabled public List<SaleItemRequest> items { get; set; }
     }
 
     public class SaleResult {
-        @AuraEnabled public Id orderId;
-        @AuraEnabled public String orderNumber;
-        @AuraEnabled public Decimal itemsTotal;
-        @AuraEnabled public Decimal freightTotal;
-        @AuraEnabled public Decimal grandTotal;
-        @AuraEnabled public String modalidadeRecebimento;
-        @AuraEnabled public Integer prazoEntregaDias;
-        @AuraEnabled public String message;
+        @AuraEnabled public Id orderId { get; set; }
+        @AuraEnabled public String orderNumber { get; set; }
+        @AuraEnabled public Decimal itemsTotal { get; set; }
+        @AuraEnabled public Decimal freightTotal { get; set; }
+        @AuraEnabled public Decimal grandTotal { get; set; }
+        @AuraEnabled public String modalidadeRecebimento { get; set; }
+        @AuraEnabled public Integer prazoEntregaDias { get; set; }
+        @AuraEnabled public String message { get; set; }
     }
 
     public static List<CustomerDTO> searchCustomers(String searchTerm) {
         String likeTerm = toLike(searchTerm);
-        List<Contact> records;
+        List<Account> records;
 
         if (likeTerm == null) {
             records = [
-                SELECT Id, AccountId, FirstName, LastName, Name, Email, Phone, CPF__c,
-                       MailingStreet, MailingCity, MailingState, MailingPostalCode
-                FROM Contact
+                SELECT Id, Name, Phone, CPF__c, PersonEmail, PersonContactId,
+                       BillingStreet, BillingCity, BillingState, BillingPostalCode,
+                       (SELECT Id, FirstName, LastName, Email FROM Contacts ORDER BY CreatedDate ASC LIMIT 1)
+                FROM Account
+                WHERE ClienteTechLar__c = TRUE
                 ORDER BY LastModifiedDate DESC
                 LIMIT 20
             ];
         } else {
-            records = [
-                SELECT Id, AccountId, FirstName, LastName, Name, Email, Phone, CPF__c,
-                       MailingStreet, MailingCity, MailingState, MailingPostalCode
+            Set<Id> accountIds = new Set<Id>();
+            for (Account match : [
+                SELECT Id
+                FROM Account
+                WHERE ClienteTechLar__c = TRUE
+                  AND (
+                      Name LIKE :likeTerm
+                      OR Phone LIKE :likeTerm
+                      OR CPF__c LIKE :likeTerm
+                      OR PersonEmail LIKE :likeTerm
+                  )
+                LIMIT 50
+            ]) {
+                accountIds.add(match.Id);
+            }
+            for (Contact match : [
+                SELECT AccountId
                 FROM Contact
-                WHERE Name LIKE :likeTerm
-                   OR Email LIKE :likeTerm
-                   OR Phone LIKE :likeTerm
-                   OR CPF__c LIKE :likeTerm
+                WHERE AccountId != NULL
+                  AND (Email LIKE :likeTerm OR CPF__c LIKE :likeTerm)
+                LIMIT 50
+            ]) {
+                accountIds.add(match.AccountId);
+            }
+            if (accountIds.isEmpty()) {
+                return new List<CustomerDTO>();
+            }
+            records = [
+                SELECT Id, Name, Phone, CPF__c, PersonEmail, PersonContactId,
+                       BillingStreet, BillingCity, BillingState, BillingPostalCode,
+                       (SELECT Id, FirstName, LastName, Email FROM Contacts ORDER BY CreatedDate ASC LIMIT 1)
+                FROM Account
+                WHERE Id IN :accountIds AND ClienteTechLar__c = TRUE
                 ORDER BY Name
                 LIMIT 20
             ];
         }
 
         List<CustomerDTO> result = new List<CustomerDTO>();
-        for (Contact record : records) {
+        for (Account record : records) {
             result.add(toCustomer(record));
         }
         return result;
@@ -92,8 +119,24 @@ public with sharing class TechLarSalesService {
         }
 
         String fullName = joinName(input.firstName, input.lastName);
-        Account account = new Account(Name = fullName);
-        insert account;
+        Account account = new Account(
+            Name = fullName,
+            RecordTypeId = getTechLarAccountRecordTypeId(),
+            Phone = input.phone,
+            CPF__c = blankToNull(input.cpf),
+            ClienteTechLar__c = true,
+            BillingStreet = input.mailingStreet,
+            BillingCity = input.mailingCity,
+            BillingState = input.mailingState,
+            BillingPostalCode = input.mailingPostalCode,
+            BillingCountry = 'Brazil'
+        );
+
+        try {
+            insert account;
+        } catch (DmlException ex) {
+            throw handled(friendlyDml(ex, 'Não foi possível cadastrar o cliente. Verifique se o CPF já existe.'));
+        }
 
         Contact contact = new Contact(
             AccountId = account.Id,
@@ -108,24 +151,17 @@ public with sharing class TechLarSalesService {
             MailingPostalCode = input.mailingPostalCode,
             MailingCountry = 'Brazil'
         );
-
         try {
             insert contact;
         } catch (DmlException ex) {
-            throw handled(friendlyDml(ex, 'Não foi possível cadastrar o cliente. Verifique se o CPF já existe.'));
+            throw handled(friendlyDml(ex, 'A conta foi criada, mas o contato complementar falhou.'));
         }
 
-        contact = [
-            SELECT Id, AccountId, FirstName, LastName, Name, Email, Phone, CPF__c,
-                   MailingStreet, MailingCity, MailingState, MailingPostalCode
-            FROM Contact
-            WHERE Id = :contact.Id
-        ];
-        return toCustomer(contact);
+        return toCustomer(loadAccount(account.Id));
     }
 
     public static List<ProductDTO> searchProducts(String searchTerm) {
-        Id standardPbId = getStandardPricebookId();
+        Id catalogId = getCatalogPricebookId();
         String likeTerm = toLike(searchTerm);
         List<PricebookEntry> entries;
 
@@ -135,7 +171,8 @@ public with sharing class TechLarSalesService {
                 FROM PricebookEntry
                 WHERE IsActive = TRUE
                   AND Product2.IsActive = TRUE
-                  AND Pricebook2Id = :standardPbId
+                  AND Product2.ClienteTechLar__c = TRUE
+                  AND Pricebook2Id = :catalogId
                 ORDER BY Product2.Name
                 LIMIT 30
             ];
@@ -145,7 +182,8 @@ public with sharing class TechLarSalesService {
                 FROM PricebookEntry
                 WHERE IsActive = TRUE
                   AND Product2.IsActive = TRUE
-                  AND Pricebook2Id = :standardPbId
+                  AND Product2.ClienteTechLar__c = TRUE
+                  AND Pricebook2Id = :catalogId
                   AND (Product2.Name LIKE :likeTerm OR Product2.ProductCode LIKE :likeTerm)
                 ORDER BY Product2.Name
                 LIMIT 30
@@ -169,14 +207,9 @@ public with sharing class TechLarSalesService {
     public static SaleResult createSale(SaleRequest request) {
         validateSale(request);
 
-        Contact customer = [
-            SELECT Id, AccountId, Name, MailingStreet, MailingCity, MailingState, MailingPostalCode
-            FROM Contact
-            WHERE Id = :request.contactId
-            LIMIT 1
-        ];
-        if (customer.AccountId == null) {
-            throw handled('O cliente precisa estar vinculado a uma conta.');
+        Account customer = loadAccount(request.accountId);
+        if (customer == null) {
+            throw handled('Selecione um cliente para concluir a venda.');
         }
 
         Map<Id, PricebookEntry> entries = loadEntries(request.items);
@@ -211,12 +244,16 @@ public with sharing class TechLarSalesService {
         }
 
         Order pedido = new Order();
-        pedido.AccountId = customer.AccountId;
-        pedido.BillToContactId = customer.Id;
-        pedido.ShipToContactId = customer.Id;
+        pedido.AccountId = customer.Id;
+        pedido.ClienteTechLar__c = true;
+        Id relatedContactId = relatedContactId(customer);
+        if (relatedContactId != null) {
+            pedido.BillToContactId = relatedContactId;
+            pedido.ShipToContactId = relatedContactId;
+        }
         pedido.EffectiveDate = Date.today();
         pedido.Status = 'Draft';
-        pedido.Pricebook2Id = getStandardPricebookId();
+        pedido.Pricebook2Id = entries.values()[0].Pricebook2Id;
         pedido.CanalVenda__c = CANAL_LOJA_FISICA;
         pedido.ModalidadeRecebimento__c = request.modalidadeRecebimento;
         pedido.ValorFrete__c = freightTotal;
@@ -231,16 +268,16 @@ public with sharing class TechLarSalesService {
             pedido.ShippingPostalCode = request.shippingPostalCode;
         } else {
             pedido.ShippingStreet = 'Retirada na loja TechLar';
-            pedido.ShippingCity = customer.MailingCity;
-            pedido.ShippingState = customer.MailingState;
-            pedido.ShippingPostalCode = customer.MailingPostalCode;
+            pedido.ShippingCity = customer.BillingCity;
+            pedido.ShippingState = customer.BillingState;
+            pedido.ShippingPostalCode = customer.BillingPostalCode;
         }
 
         try {
             insert pedido;
         } catch (DmlException ex) {
             if (isContractRequired(ex)) {
-                pedido.ContractId = createActivatedContract(customer.AccountId);
+                pedido.ContractId = createActivatedContract(customer.Id);
                 insert pedido;
             } else {
                 throw handled(friendlyDml(ex, 'Não foi possível gravar o pedido. Verifique se Orders está habilitado no org.'));
@@ -273,7 +310,7 @@ public with sharing class TechLarSalesService {
     }
 
     private static void validateSale(SaleRequest request) {
-        if (request == null || request.contactId == null) {
+        if (request == null || request.accountId == null) {
             throw handled('Selecione um cliente para concluir a venda.');
         }
         if (request.items == null || request.items.isEmpty()) {
@@ -328,10 +365,25 @@ public with sharing class TechLarSalesService {
             ids.add(item.pricebookEntryId);
         }
         return new Map<Id, PricebookEntry>([
-            SELECT Id, UnitPrice, Product2Id, Product2.Name, IsActive
+            SELECT Id, UnitPrice, Product2Id, Product2.Name, IsActive, Pricebook2Id
             FROM PricebookEntry
             WHERE Id IN :ids AND IsActive = TRUE
         ]);
+    }
+
+    private static Id getCatalogPricebookId() {
+        if (!Test.isRunningTest()) {
+            List<Pricebook2> techlarBooks = [
+                SELECT Id
+                FROM Pricebook2
+                WHERE Name = 'TechLar Pricebook' AND IsActive = TRUE
+                LIMIT 1
+            ];
+            if (!techlarBooks.isEmpty()) {
+                return techlarBooks[0].Id;
+            }
+        }
+        return getStandardPricebookId();
     }
 
     private static Id getStandardPricebookId() {
@@ -341,20 +393,55 @@ public with sharing class TechLarSalesService {
         return [SELECT Id FROM Pricebook2 WHERE IsStandard = TRUE LIMIT 1].Id;
     }
 
-    private static CustomerDTO toCustomer(Contact record) {
+    private static Account loadAccount(Id accountId) {
+        if (accountId == null) {
+            return null;
+        }
+        List<Account> records = [
+            SELECT Id, Name, Phone, CPF__c, PersonEmail, PersonContactId,
+                   BillingStreet, BillingCity, BillingState, BillingPostalCode,
+                   (SELECT Id, FirstName, LastName, Email FROM Contacts ORDER BY CreatedDate ASC LIMIT 1)
+            FROM Account
+            WHERE Id = :accountId AND ClienteTechLar__c = TRUE
+            LIMIT 1
+        ];
+        return records.isEmpty() ? null : records[0];
+    }
+
+    private static Id getTechLarAccountRecordTypeId() {
+        List<RecordType> recordTypes = [
+            SELECT Id
+            FROM RecordType
+            WHERE SobjectType = 'Account' AND DeveloperName = 'TechLar_PF'
+            LIMIT 1
+        ];
+        return recordTypes.isEmpty() ? null : recordTypes[0].Id;
+    }
+
+    private static Id relatedContactId(Account record) {
+        if (record.PersonContactId != null) {
+            return record.PersonContactId;
+        }
+        return record.Contacts.isEmpty() ? null : record.Contacts[0].Id;
+    }
+
+    private static CustomerDTO toCustomer(Account record) {
+        Contact related = record.Contacts.isEmpty() ? null : record.Contacts[0];
         CustomerDTO dto = new CustomerDTO();
-        dto.contactId = record.Id;
-        dto.accountId = record.AccountId;
-        dto.firstName = record.FirstName;
-        dto.lastName = record.LastName;
+        dto.accountId = record.Id;
+        dto.contactId = relatedContactId(record);
+        dto.firstName = related == null ? null : related.FirstName;
+        dto.lastName = related == null ? null : related.LastName;
         dto.name = record.Name;
-        dto.email = record.Email;
+        dto.email = String.isBlank(record.PersonEmail)
+            ? (related == null ? null : related.Email)
+            : record.PersonEmail;
         dto.phone = record.Phone;
         dto.cpf = record.CPF__c;
-        dto.mailingStreet = record.MailingStreet;
-        dto.mailingCity = record.MailingCity;
-        dto.mailingState = record.MailingState;
-        dto.mailingPostalCode = record.MailingPostalCode;
+        dto.mailingStreet = record.BillingStreet;
+        dto.mailingCity = record.BillingCity;
+        dto.mailingState = record.BillingState;
+        dto.mailingPostalCode = record.BillingPostalCode;
         return dto;
     }
 

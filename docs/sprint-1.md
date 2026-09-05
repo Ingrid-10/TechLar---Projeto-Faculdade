@@ -20,8 +20,8 @@ Permitir que o vendedor da TechLar realize uma venda completa em loja física, e
 
 | Conceito | Objeto Salesforce |
 | --- | --- |
-| Cliente (pessoa) | Contact + Account 1:1 |
-| CPF | Contact.CPF__c |
+| Cliente (pessoa física) | Account (identificação) + Contact 1:1 |
+| CPF | Account.CPF__c (e Contact.CPF__c, mesmo valor) |
 | Produto | Product2 + PricebookEntry |
 | Pedido | Order |
 | Item | OrderItem |

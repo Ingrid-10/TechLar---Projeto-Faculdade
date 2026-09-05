@@ -1,0 +1,51 @@
+Name,RecordType.Name,AccountNumber,CPF__c,Phone,BillingStreet,BillingCity,BillingState,BillingPostalCode,BillingCountry,ClienteTechLar__c
+Ana Souza,TechLar PF,TL-ACC-001,700.000.001-59,11980000001,"Av. Paulista, 1000",São Paulo,SP,01310-100,Brazil,true
+Bruno Lima,TechLar PF,TL-ACC-002,700.000.002-30,21980000002,"Rua do Catete, 50",Rio de Janeiro,RJ,22220-000,Brazil,true
+Carla Mendes,TechLar PF,TL-ACC-003,700.000.003-10,31980000003,"Av. Afonso Pena, 200",Belo Horizonte,MG,30130-000,Brazil,true
+Diego Alves,TechLar PF,TL-ACC-004,700.000.004-00,41980000004,"Rua XV de Novembro, 80",Curitiba,PR,80020-000,Brazil,true
+Elena Rocha,TechLar PF,TL-ACC-005,700.000.005-82,51980000005,"Av. Borges de Medeiros, 300",Porto Alegre,RS,90020-020,Brazil,true
+Felipe Castro,TechLar PF,TL-ACC-006,700.000.006-63,85980000006,"Av. Beira Mar, 150",Fortaleza,CE,60165-121,Brazil,true
+Gabriela Nunes,TechLar PF,TL-ACC-007,700.000.007-44,81980000007,"Rua das Flores, 410",Recife,PE,50010-000,Brazil,true
+Henrique Dias,TechLar PF,TL-ACC-008,700.000.008-25,71980000008,"Av. Sete de Setembro, 88",Salvador,BA,40060-000,Brazil,true
+Isabela Freitas,TechLar PF,TL-ACC-009,700.000.009-06,61980000009,SQS 308 Bloco C,Brasília,DF,70355-030,Brazil,true
+João Carvalho,TechLar PF,TL-ACC-010,700.000.010-40,92980000010,"Av. Eduardo Ribeiro, 220",Manaus,AM,69010-000,Brazil,true
+Karen Oliveira,TechLar PF,TL-ACC-011,700.000.011-20,91980000011,"Av. Presidente Vargas, 75",Belém,PA,66010-000,Brazil,true
+Lucas Barbosa,TechLar PF,TL-ACC-012,700.000.012-01,62980000012,"Av. Goiás, 560",Goiânia,GO,74015-010,Brazil,true
+Marina Teixeira,TechLar PF,TL-ACC-013,700.000.013-92,19980000013,"Rua Barão de Jaguara, 33",Campinas,SP,13015-000,Brazil,true
+Nicolas Araujo,TechLar PF,TL-ACC-014,700.000.014-73,13980000014,"Av. Ana Costa, 120",Santos,SP,11060-000,Brazil,true
+Olivia Martins,TechLar PF,TL-ACC-015,700.000.015-54,48980000015,"Rua Felipe Schmidt, 90",Florianópolis,SC,88010-000,Brazil,true
+Pedro Santos,TechLar PF,TL-ACC-016,700.000.016-35,27980000016,"Av. Jerônimo Monteiro, 15",Vitória,ES,29010-000,Brazil,true
+Quésia Ribeiro,TechLar PF,TL-ACC-017,700.000.017-16,84980000017,"Av. Prudente de Morais, 640",Natal,RN,59020-400,Brazil,true
+Rafael Gomes,TechLar PF,TL-ACC-018,700.000.018-05,83980000018,"Av. Epitácio Pessoa, 210",João Pessoa,PB,58013-000,Brazil,true
+Sofia Almeida,TechLar PF,TL-ACC-019,700.000.019-88,82980000019,"Rua do Sol, 48",Maceió,AL,57020-000,Brazil,true
+Thiago Pereira,TechLar PF,TL-ACC-020,700.000.020-11,98980000020,"Av. dos Holandeses, 300",São Luís,MA,65075-440,Brazil,true
+Úrsula Costa,TechLar PF,TL-ACC-021,700.000.021-00,86980000021,"Rua das Palmeiras, 12",Teresina,PI,64000-120,Brazil,true
+Vinicius Moreira,TechLar PF,TL-ACC-022,700.000.022-83,67980000022,"Av. Getúlio Vargas, 500",Campo Grande,MS,79002-000,Brazil,true
+Helena Batista,TechLar PF,TL-ACC-023,700.000.023-64,65980000023,"Av. Historiador Rubens de Mendonça, 1800",Cuiabá,MT,78050-000,Brazil,true
+Igor Fernandes,TechLar PF,TL-ACC-024,700.000.024-45,69980000024,"Av. Brasil, 250",Porto Velho,RO,76801-000,Brazil,true
+Julia Campos,TechLar PF,TL-ACC-025,700.000.025-26,68980000025,"Av. Ceará, 70",Rio Branco,AC,69900-000,Brazil,true
+Kevin Andrade,TechLar PF,TL-ACC-026,700.000.026-07,96980000026,"Av. Félix Pacheco, 40",Macapá,AP,68900-070,Brazil,true
+Larissa Pinto,TechLar PF,TL-ACC-027,700.000.027-98,95980000027,"Av. Eyrivaldo de Oliveira, 100",Boa Vista,RR,69301-000,Brazil,true
+Marcelo Vieira,TechLar PF,TL-ACC-028,700.000.028-79,47980000028,"Rua XV de Novembro, 400",Joinville,SC,89201-000,Brazil,true
+Natalia Correia,TechLar PF,TL-ACC-029,700.000.029-50,54980000029,"Av. São Pedro, 55",Caxias do Sul,RS,95010-000,Brazil,true
+Otavio Monteiro,TechLar PF,TL-ACC-030,700.000.030-93,16980000030,"Av. Independência, 900",Ribeirão Preto,SP,14015-010,Brazil,true
+Patricia Lopes,TechLar PF,TL-ACC-031,700.000.031-74,43980000031,"Av. Brasil, 1450",Londrina,PR,86010-000,Brazil,true
+Renato Cardoso,TechLar PF,TL-ACC-032,700.000.032-55,34980000032,"Av. Afonso Pena, 3300",Uberlândia,MG,38400-000,Brazil,true
+Sabrina Moura,TechLar PF,TL-ACC-033,700.000.033-36,21980000033,"Rua das Laranjeiras, 18",Niterói,RJ,24220-000,Brazil,true
+Tomas Farias,TechLar PF,TL-ACC-034,700.000.034-17,92980000034,"Av. Djalma Batista, 88",Manaus,AM,69050-010,Brazil,true
+Vanessa Cunha,TechLar PF,TL-ACC-035,700.000.035-06,85980000035,"Av. Beira Mar, 800",Fortaleza,CE,60165-121,Brazil,true
+Wesley Melo,TechLar PF,TL-ACC-036,700.000.036-89,81980000036,"Rua da Aurora, 220",Recife,PE,50050-000,Brazil,true
+Yasmin Duarte,TechLar PF,TL-ACC-037,700.000.037-60,71980000037,"Av. Tancredo Neves, 1500",Salvador,BA,41820-020,Brazil,true
+Arthur Nascimento,TechLar PF,TL-ACC-038,700.000.038-40,61980000038,CLS 109 Bloco A,Brasília,DF,70372-510,Brazil,true
+Beatriz Rezende,TechLar PF,TL-ACC-039,700.000.039-21,11980000039,"Av. Ipiranga, 200",São Paulo,SP,01046-010,Brazil,true
+Caio Fonseca,TechLar PF,TL-ACC-040,700.000.040-65,21980000040,"Rua Voluntários da Pátria, 77",Rio de Janeiro,RJ,22270-000,Brazil,true
+Daniela Pires,TechLar PF,TL-ACC-041,700.000.041-46,31980000041,"Av. Amazonas, 640",Belo Horizonte,MG,30180-000,Brazil,true
+Eduardo Azevedo,TechLar PF,TL-ACC-042,700.000.042-27,41980000042,"Rua Marechal Deodoro, 25",Curitiba,PR,80010-000,Brazil,true
+Fernanda Tavares,TechLar PF,TL-ACC-043,700.000.043-08,51980000043,"Av. Osvaldo Aranha, 99",Porto Alegre,RS,90035-190,Brazil,true
+Gustavo Prado,TechLar PF,TL-ACC-044,700.000.044-99,85980000044,"Av. Santos Dumont, 310",Fortaleza,CE,60150-160,Brazil,true
+Heloisa Figueiredo,TechLar PF,TL-ACC-045,700.000.045-70,81980000045,"Rua do Bom Jesus, 140",Recife,PE,50030-170,Brazil,true
+Ian Borges,TechLar PF,TL-ACC-046,700.000.046-50,71980000046,"Av. Sete de Setembro, 1200",Salvador,BA,40060-001,Brazil,true
+Camila Siqueira,TechLar PF,TL-ACC-047,700.000.047-31,61980000047,SQN 204 Bloco B,Brasília,DF,70842-020,Brazil,true
+Rodrigo Peixoto,TechLar PF,TL-ACC-048,700.000.048-12,11980000048,"Av. Paulista, 2100",São Paulo,SP,01310-200,Brazil,true
+Amanda Vargas,TechLar PF,TL-ACC-049,700.000.049-01,21980000049,"Rua do Ouvidor, 60",Rio de Janeiro,RJ,20040-030,Brazil,true
+Letícia Andrade,TechLar PF,TL-ACC-050,700.000.050-37,31980000050,"Av. Afonso Pena, 1500",Belo Horizonte,MG,30130-007,Brazil,true

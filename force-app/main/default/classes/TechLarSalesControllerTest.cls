@@ -23,7 +23,17 @@ private class TechLarSalesControllerTest {
 
     @TestSetup
     static void setupData() {
-        Account account = new Account(Name = 'Ana Souza');
+        Account account = new Account(
+            Name = 'Ana Souza',
+            Phone = '11999990001',
+            CPF__c = '111.111.111-11',
+            ClienteTechLar__c = true,
+            BillingStreet = 'Av. Paulista, 1000',
+            BillingCity = 'São Paulo',
+            BillingState = 'SP',
+            BillingPostalCode = '01310-100',
+            BillingCountry = 'Brazil'
+        );
         insert account;
 
         Contact customer = new Contact(
@@ -45,12 +55,14 @@ private class TechLarSalesControllerTest {
             Name = 'Notebook TechLar X',
             ProductCode = 'TL-NB-001',
             IsActive = true,
+            ClienteTechLar__c = true,
             Description = 'Notebook para uso profissional'
         );
         Product2 mouse = new Product2(
             Name = 'Mouse Gamer TechLar',
             ProductCode = 'TL-MS-001',
-            IsActive = true
+            IsActive = true,
+            ClienteTechLar__c = true
         );
         insert new List<Product2>{ notebook, mouse };
 
@@ -69,10 +81,12 @@ private class TechLarSalesControllerTest {
         List<TechLarSalesService.CustomerDTO> recent = TechLarSalesController.searchCustomers('');
         Test.stopTest();
 
-        System.assertEquals(1, byName.size(), 'Deve localizar Ana Souza pelo nome');
-        System.assertEquals(1, byCpf.size(), 'Deve localizar o cliente pelo CPF');
+        System.assertEquals(1, byName.size(), 'Deve localizar Ana Souza pelo nome da Account');
+        System.assertEquals(1, byCpf.size(), 'Deve localizar o cliente pelo CPF da Account');
         System.assert(recent.size() >= 1, 'Busca vazia deve retornar clientes recentes');
         System.assertEquals('ana.souza@techlar.example', byName[0].email);
+        System.assertNotEquals(null, byName[0].accountId);
+        System.assertEquals('111.111.111-11', byCpf[0].cpf);
     }
 
     @IsTest
@@ -90,9 +104,16 @@ private class TechLarSalesControllerTest {
         TechLarSalesService.CustomerDTO created = TechLarSalesController.createCustomer(input);
         Test.stopTest();
 
-        System.assertNotEquals(null, created.contactId);
         System.assertNotEquals(null, created.accountId);
-        Contact stored = [SELECT AccountId, Email, CPF__c FROM Contact WHERE Id = :created.contactId];
+        Account storedAccount = [
+            SELECT Name, CPF__c, ClienteTechLar__c
+            FROM Account
+            WHERE Id = :created.accountId
+        ];
+        System.assertEquals('Bruno Lima', storedAccount.Name);
+        System.assertEquals('222.222.222-22', storedAccount.CPF__c);
+        System.assertEquals(true, storedAccount.ClienteTechLar__c);
+        Contact stored = [SELECT AccountId, Email, CPF__c FROM Contact WHERE AccountId = :created.accountId LIMIT 1];
         System.assertEquals('222.222.222-22', stored.CPF__c);
         System.assertEquals(created.accountId, stored.AccountId);
     }
@@ -128,7 +149,7 @@ private class TechLarSalesControllerTest {
 
     @IsTest
     static void createSalePersistsOrderAndItems() {
-        Contact customer = [SELECT Id FROM Contact WHERE CPF__c = '111.111.111-11' LIMIT 1];
+        Account customer = [SELECT Id FROM Account WHERE CPF__c = '111.111.111-11' LIMIT 1];
         PricebookEntry notebook = [
             SELECT Id FROM PricebookEntry WHERE Product2.ProductCode = 'TL-NB-001' LIMIT 1
         ];
@@ -150,18 +171,19 @@ private class TechLarSalesControllerTest {
         System.assertEquals('Activated', [SELECT Status FROM Order WHERE Id = :result.orderId].Status);
         System.assertEquals(2, [SELECT COUNT() FROM OrderItem WHERE OrderId = :result.orderId]);
         Order stored = [
-            SELECT CanalVenda__c, ModalidadeRecebimento__c, BillToContactId
+            SELECT AccountId, CanalVenda__c, ModalidadeRecebimento__c, ClienteTechLar__c
             FROM Order
             WHERE Id = :result.orderId
         ];
         System.assertEquals('Loja Física', stored.CanalVenda__c);
         System.assertEquals('Retirada na Loja', stored.ModalidadeRecebimento__c);
-        System.assertEquals(customer.Id, stored.BillToContactId);
+        System.assertEquals(customer.Id, stored.AccountId);
+        System.assertEquals(true, stored.ClienteTechLar__c);
     }
 
     @IsTest
     static void createSaleRejectsEmptyCart() {
-        Contact customer = [SELECT Id FROM Contact WHERE CPF__c = '111.111.111-11' LIMIT 1];
+        Account customer = [SELECT Id FROM Account WHERE CPF__c = '111.111.111-11' LIMIT 1];
         TechLarSalesService.SaleRequest request = newRequest(customer.Id, 'Retirada na Loja');
 
         try {
@@ -178,7 +200,7 @@ private class TechLarSalesControllerTest {
 
     @IsTest
     static void createSaleRequiresAddressWhenDelivery() {
-        Contact customer = [SELECT Id FROM Contact WHERE CPF__c = '111.111.111-11' LIMIT 1];
+        Account customer = [SELECT Id FROM Account WHERE CPF__c = '111.111.111-11' LIMIT 1];
         PricebookEntry mouse = [
             SELECT Id FROM PricebookEntry WHERE Product2.ProductCode = 'TL-MS-001' LIMIT 1
         ];
@@ -199,7 +221,7 @@ private class TechLarSalesControllerTest {
 
     @IsTest
     static void createSaleDeliveryRecalculatesFreight() {
-        Contact customer = [SELECT Id FROM Contact WHERE CPF__c = '111.111.111-11' LIMIT 1];
+        Account customer = [SELECT Id FROM Account WHERE CPF__c = '111.111.111-11' LIMIT 1];
         PricebookEntry mouse = [
             SELECT Id FROM PricebookEntry WHERE Product2.ProductCode = 'TL-MS-001' LIMIT 1
         ];
@@ -262,9 +284,9 @@ private class TechLarSalesControllerTest {
         System.assertEquals(8, am.prazoDias);
     }
 
-    private static TechLarSalesService.SaleRequest newRequest(Id contactId, String modalidade) {
+    private static TechLarSalesService.SaleRequest newRequest(Id accountId, String modalidade) {
         TechLarSalesService.SaleRequest request = new TechLarSalesService.SaleRequest();
-        request.contactId = contactId;
+        request.accountId = accountId;
         request.modalidadeRecebimento = modalidade;
         request.items = new List<TechLarSalesService.SaleItemRequest>();
         return request;

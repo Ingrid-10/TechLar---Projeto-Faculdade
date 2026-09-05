@@ -1,0 +1,51 @@
+FirstName,LastName,Email,Phone,CPF__c,ClienteTechLar__c,Account.AccountNumber,Account.CPF__c,MailingStreet,MailingCity,MailingState,MailingPostalCode,MailingCountry
+Ana,Souza,ana.souza@techlar.example,11980000001,700.000.001-59,true,TL-ACC-001,700.000.001-59,"Av. Paulista, 1000",São Paulo,SP,01310-100,Brazil
+Bruno,Lima,bruno.lima@techlar.example,21980000002,700.000.002-30,true,TL-ACC-002,700.000.002-30,"Rua do Catete, 50",Rio de Janeiro,RJ,22220-000,Brazil
+Carla,Mendes,carla.mendes@techlar.example,31980000003,700.000.003-10,true,TL-ACC-003,700.000.003-10,"Av. Afonso Pena, 200",Belo Horizonte,MG,30130-000,Brazil
+Diego,Alves,diego.alves@techlar.example,41980000004,700.000.004-00,true,TL-ACC-004,700.000.004-00,"Rua XV de Novembro, 80",Curitiba,PR,80020-000,Brazil
+Elena,Rocha,elena.rocha@techlar.example,51980000005,700.000.005-82,true,TL-ACC-005,700.000.005-82,"Av. Borges de Medeiros, 300",Porto Alegre,RS,90020-020,Brazil
+Felipe,Castro,felipe.castro@techlar.example,85980000006,700.000.006-63,true,TL-ACC-006,700.000.006-63,"Av. Beira Mar, 150",Fortaleza,CE,60165-121,Brazil
+Gabriela,Nunes,gabriela.nunes@techlar.example,81980000007,700.000.007-44,true,TL-ACC-007,700.000.007-44,"Rua das Flores, 410",Recife,PE,50010-000,Brazil
+Henrique,Dias,henrique.dias@techlar.example,71980000008,700.000.008-25,true,TL-ACC-008,700.000.008-25,"Av. Sete de Setembro, 88",Salvador,BA,40060-000,Brazil
+Isabela,Freitas,isabela.freitas@techlar.example,61980000009,700.000.009-06,true,TL-ACC-009,700.000.009-06,SQS 308 Bloco C,Brasília,DF,70355-030,Brazil
+João,Carvalho,joao.carvalho@techlar.example,92980000010,700.000.010-40,true,TL-ACC-010,700.000.010-40,"Av. Eduardo Ribeiro, 220",Manaus,AM,69010-000,Brazil
+Karen,Oliveira,karen.oliveira@techlar.example,91980000011,700.000.011-20,true,TL-ACC-011,700.000.011-20,"Av. Presidente Vargas, 75",Belém,PA,66010-000,Brazil
+Lucas,Barbosa,lucas.barbosa@techlar.example,62980000012,700.000.012-01,true,TL-ACC-012,700.000.012-01,"Av. Goiás, 560",Goiânia,GO,74015-010,Brazil
+Marina,Teixeira,marina.teixeira@techlar.example,19980000013,700.000.013-92,true,TL-ACC-013,700.000.013-92,"Rua Barão de Jaguara, 33",Campinas,SP,13015-000,Brazil
+Nicolas,Araujo,nicolas.araujo@techlar.example,13980000014,700.000.014-73,true,TL-ACC-014,700.000.014-73,"Av. Ana Costa, 120",Santos,SP,11060-000,Brazil
+Olivia,Martins,olivia.martins@techlar.example,48980000015,700.000.015-54,true,TL-ACC-015,700.000.015-54,"Rua Felipe Schmidt, 90",Florianópolis,SC,88010-000,Brazil
+Pedro,Santos,pedro.santos@techlar.example,27980000016,700.000.016-35,true,TL-ACC-016,700.000.016-35,"Av. Jerônimo Monteiro, 15",Vitória,ES,29010-000,Brazil
+Quésia,Ribeiro,quesia.ribeiro@techlar.example,84980000017,700.000.017-16,true,TL-ACC-017,700.000.017-16,"Av. Prudente de Morais, 640",Natal,RN,59020-400,Brazil
+Rafael,Gomes,rafael.gomes@techlar.example,83980000018,700.000.018-05,true,TL-ACC-018,700.000.018-05,"Av. Epitácio Pessoa, 210",João Pessoa,PB,58013-000,Brazil
+Sofia,Almeida,sofia.almeida@techlar.example,82980000019,700.000.019-88,true,TL-ACC-019,700.000.019-88,"Rua do Sol, 48",Maceió,AL,57020-000,Brazil
+Thiago,Pereira,thiago.pereira@techlar.example,98980000020,700.000.020-11,true,TL-ACC-020,700.000.020-11,"Av. dos Holandeses, 300",São Luís,MA,65075-440,Brazil
+Úrsula,Costa,ursula.costa@techlar.example,86980000021,700.000.021-00,true,TL-ACC-021,700.000.021-00,"Rua das Palmeiras, 12",Teresina,PI,64000-120,Brazil
+Vinicius,Moreira,vinicius.moreira@techlar.example,67980000022,700.000.022-83,true,TL-ACC-022,700.000.022-83,"Av. Getúlio Vargas, 500",Campo Grande,MS,79002-000,Brazil
+Helena,Batista,helena.batista@techlar.example,65980000023,700.000.023-64,true,TL-ACC-023,700.000.023-64,"Av. Historiador Rubens de Mendonça, 1800",Cuiabá,MT,78050-000,Brazil
+Igor,Fernandes,igor.fernandes@techlar.example,69980000024,700.000.024-45,true,TL-ACC-024,700.000.024-45,"Av. Brasil, 250",Porto Velho,RO,76801-000,Brazil
+Julia,Campos,julia.campos@techlar.example,68980000025,700.000.025-26,true,TL-ACC-025,700.000.025-26,"Av. Ceará, 70",Rio Branco,AC,69900-000,Brazil
+Kevin,Andrade,kevin.andrade@techlar.example,96980000026,700.000.026-07,true,TL-ACC-026,700.000.026-07,"Av. Félix Pacheco, 40",Macapá,AP,68900-070,Brazil
+Larissa,Pinto,larissa.pinto@techlar.example,95980000027,700.000.027-98,true,TL-ACC-027,700.000.027-98,"Av. Eyrivaldo de Oliveira, 100",Boa Vista,RR,69301-000,Brazil
+Marcelo,Vieira,marcelo.vieira@techlar.example,47980000028,700.000.028-79,true,TL-ACC-028,700.000.028-79,"Rua XV de Novembro, 400",Joinville,SC,89201-000,Brazil
+Natalia,Correia,natalia.correia@techlar.example,54980000029,700.000.029-50,true,TL-ACC-029,700.000.029-50,"Av. São Pedro, 55",Caxias do Sul,RS,95010-000,Brazil
+Otavio,Monteiro,otavio.monteiro@techlar.example,16980000030,700.000.030-93,true,TL-ACC-030,700.000.030-93,"Av. Independência, 900",Ribeirão Preto,SP,14015-010,Brazil
+Patricia,Lopes,patricia.lopes@techlar.example,43980000031,700.000.031-74,true,TL-ACC-031,700.000.031-74,"Av. Brasil, 1450",Londrina,PR,86010-000,Brazil
+Renato,Cardoso,renato.cardoso@techlar.example,34980000032,700.000.032-55,true,TL-ACC-032,700.000.032-55,"Av. Afonso Pena, 3300",Uberlândia,MG,38400-000,Brazil
+Sabrina,Moura,sabrina.moura@techlar.example,21980000033,700.000.033-36,true,TL-ACC-033,700.000.033-36,"Rua das Laranjeiras, 18",Niterói,RJ,24220-000,Brazil
+Tomas,Farias,tomas.farias@techlar.example,92980000034,700.000.034-17,true,TL-ACC-034,700.000.034-17,"Av. Djalma Batista, 88",Manaus,AM,69050-010,Brazil
+Vanessa,Cunha,vanessa.cunha@techlar.example,85980000035,700.000.035-06,true,TL-ACC-035,700.000.035-06,"Av. Beira Mar, 800",Fortaleza,CE,60165-121,Brazil
+Wesley,Melo,wesley.melo@techlar.example,81980000036,700.000.036-89,true,TL-ACC-036,700.000.036-89,"Rua da Aurora, 220",Recife,PE,50050-000,Brazil
+Yasmin,Duarte,yasmin.duarte@techlar.example,71980000037,700.000.037-60,true,TL-ACC-037,700.000.037-60,"Av. Tancredo Neves, 1500",Salvador,BA,41820-020,Brazil
+Arthur,Nascimento,arthur.nascimento@techlar.example,61980000038,700.000.038-40,true,TL-ACC-038,700.000.038-40,CLS 109 Bloco A,Brasília,DF,70372-510,Brazil
+Beatriz,Rezende,beatriz.rezende@techlar.example,11980000039,700.000.039-21,true,TL-ACC-039,700.000.039-21,"Av. Ipiranga, 200",São Paulo,SP,01046-010,Brazil
+Caio,Fonseca,caio.fonseca@techlar.example,21980000040,700.000.040-65,true,TL-ACC-040,700.000.040-65,"Rua Voluntários da Pátria, 77",Rio de Janeiro,RJ,22270-000,Brazil
+Daniela,Pires,daniela.pires@techlar.example,31980000041,700.000.041-46,true,TL-ACC-041,700.000.041-46,"Av. Amazonas, 640",Belo Horizonte,MG,30180-000,Brazil
+Eduardo,Azevedo,eduardo.azevedo@techlar.example,41980000042,700.000.042-27,true,TL-ACC-042,700.000.042-27,"Rua Marechal Deodoro, 25",Curitiba,PR,80010-000,Brazil
+Fernanda,Tavares,fernanda.tavares@techlar.example,51980000043,700.000.043-08,true,TL-ACC-043,700.000.043-08,"Av. Osvaldo Aranha, 99",Porto Alegre,RS,90035-190,Brazil
+Gustavo,Prado,gustavo.prado@techlar.example,85980000044,700.000.044-99,true,TL-ACC-044,700.000.044-99,"Av. Santos Dumont, 310",Fortaleza,CE,60150-160,Brazil
+Heloisa,Figueiredo,heloisa.figueiredo@techlar.example,81980000045,700.000.045-70,true,TL-ACC-045,700.000.045-70,"Rua do Bom Jesus, 140",Recife,PE,50030-170,Brazil
+Ian,Borges,ian.borges@techlar.example,71980000046,700.000.046-50,true,TL-ACC-046,700.000.046-50,"Av. Sete de Setembro, 1200",Salvador,BA,40060-001,Brazil
+Camila,Siqueira,camila.siqueira@techlar.example,61980000047,700.000.047-31,true,TL-ACC-047,700.000.047-31,SQN 204 Bloco B,Brasília,DF,70842-020,Brazil
+Rodrigo,Peixoto,rodrigo.peixoto@techlar.example,11980000048,700.000.048-12,true,TL-ACC-048,700.000.048-12,"Av. Paulista, 2100",São Paulo,SP,01310-200,Brazil
+Amanda,Vargas,amanda.vargas@techlar.example,21980000049,700.000.049-01,true,TL-ACC-049,700.000.049-01,"Rua do Ouvidor, 60",Rio de Janeiro,RJ,20040-030,Brazil
+Letícia,Andrade,leticia.andrade@techlar.example,31980000050,700.000.050-37,true,TL-ACC-050,700.000.050-37,"Av. Afonso Pena, 1500",Belo Horizonte,MG,30130-007,Brazil

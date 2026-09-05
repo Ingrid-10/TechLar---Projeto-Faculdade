@@ -1,0 +1,9 @@
+Product2.ProductCode,Pricebook2.Name,UnitPrice,IsActive,UseStandardPrice
+TL-NB-001,Standard Price Book,4999,true,false
+TL-MS-001,Standard Price Book,299,true,false
+TL-KB-001,Standard Price Book,549,true,false
+TL-HS-001,Standard Price Book,799,true,false
+TL-MN-001,Standard Price Book,1899,true,false
+TL-SSD-001,Standard Price Book,459,true,false
+TL-WC-001,Standard Price Book,249,true,false
+TL-HB-001,Standard Price Book,189,true,false

@@ -1,0 +1,9 @@
+Name,ProductCode,Description,IsActive,Family,ClienteTechLar__c
+Notebook TechLar X,TL-NB-001,Notebook 16GB RAM 512GB SSD,true,Computadores,true
+Mouse Gamer TechLar,TL-MS-001,Mouse óptico 12000 DPI,true,Periféricos,true
+Teclado Mecânico TechLar,TL-KB-001,Teclado switch blue ABNT2,true,Periféricos,true
+Headset TechLar Pro,TL-HS-001,Headset com microfone e RGB,true,Áudio,true
+Monitor 27 TechLar,TL-MN-001,Monitor IPS 27 polegadas 144Hz,true,Monitores,true
+SSD 1TB TechLar,TL-SSD-001,SSD NVMe 1TB,true,Armazenamento,true
+Webcam Full HD TechLar,TL-WC-001,Webcam 1080p com microfone,true,Periféricos,true
+Hub USB-C TechLar,TL-HB-001,Hub 7 em 1 USB-C,true,Acessórios,true

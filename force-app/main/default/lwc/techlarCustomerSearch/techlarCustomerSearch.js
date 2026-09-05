@@ -51,6 +51,8 @@ export default class TechlarCustomerSearch extends LightningElement {
             this.results = await searchCustomers({ searchTerm: this.searchTerm });
             if (!this.results.length) {
                 this.showCreate = true;
+            } else if (this.results.length === 1 && this.results[0]?.accountId) {
+                this.selectCustomer(this.results[0]);
             }
         } catch (error) {
             this.errorMessage = error?.body?.message || 'Não foi possível pesquisar clientes.';
@@ -60,10 +62,34 @@ export default class TechlarCustomerSearch extends LightningElement {
     }
 
     handleSelect(event) {
-        const contactId = event.currentTarget.dataset.id;
-        const customer = this.results.find((item) => item.contactId === contactId);
-        this.dispatchEvent(new CustomEvent('customerselected', { detail: customer }));
+        const index = Number(event.currentTarget.dataset.index);
+        this.selectCustomer(this.results[index]);
+    }
+
+    selectCustomer(customer) {
+        if (!customer?.accountId) {
+            this.errorMessage = 'Não foi possível selecionar este cliente. Pesquise novamente.';
+            return;
+        }
+        this.dispatchEvent(
+            new CustomEvent('customerselected', {
+                detail: {
+                    accountId: customer.accountId,
+                    firstName: customer.firstName,
+                    lastName: customer.lastName,
+                    name: customer.name,
+                    email: customer.email,
+                    phone: customer.phone,
+                    cpf: customer.cpf,
+                    mailingStreet: customer.mailingStreet,
+                    mailingCity: customer.mailingCity,
+                    mailingState: customer.mailingState,
+                    mailingPostalCode: customer.mailingPostalCode
+                }
+            })
+        );
         this.showCreate = false;
+        this.results = [];
     }
 
     toggleCreate() {
@@ -80,9 +106,7 @@ export default class TechlarCustomerSearch extends LightningElement {
         this.errorMessage = undefined;
         try {
             const customer = await createCustomer({ customer: this.draft });
-            this.dispatchEvent(new CustomEvent('customerselected', { detail: customer }));
-            this.showCreate = false;
-            this.results = [customer];
+            this.selectCustomer(customer);
         } catch (error) {
             this.errorMessage = error?.body?.message || 'Não foi possível cadastrar o cliente.';
         } finally {

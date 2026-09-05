@@ -20,11 +20,11 @@ export default class TechlarSalesPage extends NavigationMixin(LightningElement) 
     errorMessage;
 
     get hasCustomer() {
-        return Boolean(this.customer);
+        return Boolean(this.customer?.accountId);
     }
 
     get isCatalogLocked() {
-        return !this.customer;
+        return !this.customer?.accountId;
     }
 
     get itemsTotal() {
@@ -91,8 +91,8 @@ export default class TechlarSalesPage extends NavigationMixin(LightningElement) 
 
     async handleFinalize() {
         this.errorMessage = undefined;
-        if (!this.customer) {
-            this.errorMessage = 'Selecione um cliente para concluir a venda.';
+        if (!this.customer?.accountId) {
+            this.errorMessage = 'Selecione um cliente na lista para concluir a venda.';
             return;
         }
         if (!this.cartItems.length) {
@@ -108,7 +108,7 @@ export default class TechlarSalesPage extends NavigationMixin(LightningElement) 
         try {
             const result = await createSale({
                 request: {
-                    contactId: this.customer.contactId,
+                    accountId: this.customer.accountId,
                     modalidadeRecebimento: this.delivery.modalidadeRecebimento,
                     shippingStreet: this.delivery.shippingStreet,
                     shippingCity: this.delivery.shippingCity,
