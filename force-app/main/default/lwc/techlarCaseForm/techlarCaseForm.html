@@ -1,0 +1,28 @@
+<template>
+    <lightning-card title="Novo atendimento" icon-name="standard:case" class="slds-m-top_medium">
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <p if:false={hasSelection} class="slds-text-color_weak">
+                Selecione um produto comprado para registrar o atendimento.
+            </p>
+            <template if:true={hasSelection}>
+                <p class="slds-text-title_caps">Produto</p>
+                <p class="slds-m-bottom_small">{productLabel} · {orderLabel}</p>
+                <lightning-combobox
+                    name="motivo"
+                    label="Motivo"
+                    value={motivo}
+                    options={options}
+                    placeholder="Selecione o motivo"
+                    onchange={handleMotivo}
+                ></lightning-combobox>
+                <lightning-textarea
+                    class="slds-m-top_small"
+                    label="Descrição"
+                    value={description}
+                    placeholder="Descreva o problema relatado pelo cliente"
+                    onchange={handleDescription}
+                ></lightning-textarea>
+            </template>
+        </div>
+    </lightning-card>
+</template>

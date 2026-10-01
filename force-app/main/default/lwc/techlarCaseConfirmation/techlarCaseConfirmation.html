@@ -1,0 +1,37 @@
+<template>
+    <lightning-card title="Atendimento registrado" icon-name="standard:task2" class="slds-m-bottom_medium">
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <p class="slds-text-heading_small">Case {confirmation.caseNumber}</p>
+            <p class="slds-m-top_xx-small">{confirmation.message}</p>
+            <ul class="slds-m-top_medium summary">
+                <li>Status: {confirmation.statusLabel}</li>
+                <li>Fila / responsável: {confirmation.ownerName}</li>
+                <li>Motivo: {confirmation.motivo}</li>
+                <li>Pedido: {confirmation.orderNumber}</li>
+                <li>Produto: {confirmation.productName}</li>
+                <li if:true={confirmation.resultado}>Resultado: {confirmation.resultado}</li>
+            </ul>
+
+            <template if:true={isOpen}>
+                <lightning-combobox
+                    class="slds-m-top_medium"
+                    name="resultado"
+                    label="Resultado"
+                    value={resultado}
+                    options={options}
+                    onchange={handleResultado}
+                ></lightning-combobox>
+                <div if:true={errorMessage} class="slds-text-color_error slds-m-top_small">{errorMessage}</div>
+                <div class="slds-m-top_medium">
+                    <lightning-button label="Concluir atendimento" variant="brand" disabled={isSaving} onclick={handleResolve}></lightning-button>
+                    <lightning-button class="slds-m-left_small" label="Atualizar status do Flow" onclick={handleRefresh}></lightning-button>
+                </div>
+            </template>
+
+            <div class="slds-m-top_medium">
+                <lightning-button label="Abrir Case" variant="neutral" onclick={handleOpen}></lightning-button>
+                <lightning-button class="slds-m-left_small" label="Novo atendimento" onclick={handleNew}></lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</template>

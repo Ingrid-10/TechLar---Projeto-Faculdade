@@ -30,8 +30,22 @@ sf org open --target-org techlar --path /lightning/app/c__TechLar
 
 Abra o app **TechLar** e a aba **Nova Venda**.
 
+## Sprint 2 — Atendimento e Pós-venda (AC2 — 13/10)
+
+Página LWC para o atendente localizar o cliente da Sprint 1, ver as compras e abrir um Case. Um Flow classifica o motivo, envia para a fila e coloca o atendimento em análise.
+
+Documentação: [docs/sprint-2.md](docs/sprint-2.md)
+
+```bash
+sf org assign permset --name TechLar_Atendente --target-org techlar
+sf org open --target-org techlar --path /lightning/n/TechLar_Atendimento
+```
+
+Abra a aba **Atendimento**.
+
 ## Stack
 
 - LWC (front-end)
 - Apex (regras de negócio)
-- Account, Contact, Product2, PricebookEntry, Order, OrderItem (dados)
+- Account, Contact, Product2, PricebookEntry, Order, OrderItem, Case (dados)
+- Flow (encaminhamento do Case)

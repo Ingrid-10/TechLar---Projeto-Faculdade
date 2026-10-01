@@ -17,3 +17,7 @@ coverage/
 # Env
 .env
 .env.local
+
+# Generated / media
+**/jsconfig.json
+Videos/

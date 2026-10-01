@@ -1,0 +1,96 @@
+<template>
+    <div class="sales-shell">
+        <header class="sales-header">
+            <div>
+                <p class="eyebrow">TechLar 360</p>
+                <h1>Atendimento</h1>
+                <p class="subtitle">Pós-venda unificado à compra em loja física</p>
+            </div>
+            <lightning-button
+                if:true={confirmation}
+                label="Novo atendimento"
+                onclick={handleNewCase}
+                variant="neutral"
+            ></lightning-button>
+        </header>
+
+        <div if:true={errorMessage} class="slds-alert slds-alert_error slds-m-bottom_medium" role="alert">
+            {errorMessage}
+        </div>
+
+        <c-techlar-case-confirmation
+            if:true={confirmation}
+            confirmation={confirmation}
+            onopencase={handleOpenRecord}
+            onnewcase={handleNewCase}
+            oncaseupdated={handleCaseUpdated}
+        ></c-techlar-case-confirmation>
+
+        <template if:false={confirmation}>
+            <lightning-card title="Cliente" icon-name="standard:account">
+                <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                    <div class="search-row">
+                        <lightning-input
+                            type="search"
+                            label="Pesquisar cliente"
+                            placeholder="Nome, e-mail, telefone ou CPF"
+                            value={searchTerm}
+                            onchange={handleTermChange}
+                            onkeydown={handleKey}
+                        ></lightning-input>
+                        <lightning-button
+                            class="slds-m-top_large"
+                            label="Buscar"
+                            variant="brand"
+                            onclick={handleSearch}
+                            disabled={isSearching}
+                        ></lightning-button>
+                    </div>
+
+                    <template if:true={customer}>
+                        <div class="selected-box slds-m-top_medium">
+                            <p class="slds-text-heading_small">{customer.name}</p>
+                            <p>{customer.email}</p>
+                            <p>{customer.phone} · CPF {customer.cpf}</p>
+                        </div>
+                    </template>
+
+                    <ul if:true={hasResults} class="slds-m-top_small result-list">
+                        <template for:each={results} for:item="row" for:index="index">
+                            <li key={row.accountId}>
+                                <button class="result-btn" data-index={index} onclick={handleSelect}>
+                                    <strong>{row.name}</strong>
+                                    <span>{row.email} · {row.cpf}</span>
+                                </button>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </lightning-card>
+
+            <c-techlar-service-orders
+                orders={orders}
+                selected-item={selectedItem}
+                is-loading={isLoadingOrders}
+                has-customer={hasCustomer}
+                onitemselected={handleItemSelected}
+            ></c-techlar-service-orders>
+
+            <c-techlar-case-form
+                selected-item={selectedItem}
+                motivo={motivo}
+                description={description}
+                onformchange={handleFormChange}
+            ></c-techlar-case-form>
+
+            <div class="footer-actions">
+                <lightning-button
+                    label="Abrir atendimento"
+                    variant="brand"
+                    disabled={isSaving}
+                    onclick={handleOpenCase}
+                ></lightning-button>
+            </div>
+        </template>
+    </div>
+</template>

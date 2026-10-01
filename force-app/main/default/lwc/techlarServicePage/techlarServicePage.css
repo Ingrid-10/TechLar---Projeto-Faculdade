@@ -1,0 +1,86 @@
+.sales-shell {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1rem 1rem 2rem;
+}
+
+.sales-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: 0.5rem;
+    background: linear-gradient(135deg, #0b3a6a 0%, #1d4e89 100%);
+    color: #fff;
+}
+
+.eyebrow {
+    margin: 0;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    opacity: 0.8;
+}
+
+h1 {
+    margin: 0.15rem 0;
+    font-size: 1.6rem;
+}
+
+.subtitle {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.search-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.75rem;
+    align-items: start;
+}
+
+.selected-box {
+    padding: 0.75rem 1rem;
+    border-radius: 0.35rem;
+    background: #f3f8fc;
+    border: 1px solid #d8e6f3;
+}
+
+.selected-box p {
+    margin: 0.1rem 0;
+}
+
+.result-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+}
+
+.result-btn {
+    width: 100%;
+    text-align: left;
+    background: #fff;
+    border: 1px solid #dddbda;
+    border-radius: 0.25rem;
+    padding: 0.6rem 0.75rem;
+    margin-bottom: 0.4rem;
+    cursor: pointer;
+}
+
+.result-btn span {
+    display: block;
+    color: #706e6b;
+    font-size: 0.8rem;
+}
+
+.result-btn:hover {
+    border-color: #1d4e89;
+}
+
+.footer-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.75rem;
+}

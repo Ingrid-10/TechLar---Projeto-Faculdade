@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TechLar_Atendimento</fullName>
+    <active>true</active>
+    <businessProcess>TechLar</businessProcess>
+    <description>Atendimento pós-venda da Sprint 2, desconectado dos processos SDO.</description>
+    <label>TechLar Atendimento</label>
+    <picklistValues>
+        <picklist>MotivoPosVenda__c</picklist>
+        <values>
+            <fullName>Produto com defeito</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Solicitação de troca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problema na entrega</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dúvida sobre pedido</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancelamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outros</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Origin</picklist>
+        <values>
+            <fullName>Phone</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority</picklist>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason</picklist>
+        <values>
+            <fullName>New problem</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ResultadoAtendimento__c</picklist>
+        <values>
+            <fullName>Troca aprovada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Orientação prestada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sem procedência</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>General</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+</RecordType>
