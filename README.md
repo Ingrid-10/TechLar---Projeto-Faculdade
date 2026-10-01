@@ -34,7 +34,9 @@ Abra o app **TechLar** e a aba **Nova Venda**.
 
 Workspace LWC para o atendente localizar o cliente da Sprint 1, ver Account e compras, abrir um Case com Path na mesma tela e concluir o atendimento. Um Flow classifica o motivo e envia para a fila.
 
-Documentação: [docs/sprint-2.md](docs/sprint-2.md) · Board: [docs/board-sprint-2.md](docs/board-sprint-2.md)
+Documentação: [docs/sprint-2.md](docs/sprint-2.md)
+
+Board: [mesmo Project da Sprint 1](https://github.com/users/Ingrid-10/projects/1) (view **Sprint 2**)
 
 ```bash
 sf org assign permset --name TechLar_Atendente --target-org techlar
