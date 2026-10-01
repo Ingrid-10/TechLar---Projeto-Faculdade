@@ -1,6 +1,5 @@
 import { LightningElement, api } from 'lwc';
 import resolveCase from '@salesforce/apex/TechLarServiceController.resolveCase';
-import getCase from '@salesforce/apex/TechLarServiceController.getCase';
 
 const RESULTADOS = [
     { label: 'Troca aprovada', value: 'Troca aprovada' },
@@ -19,16 +18,31 @@ export default class TechlarCaseConfirmation extends LightningElement {
         return this.confirmation?.status && this.confirmation.status !== 'Closed';
     }
 
+    get purchaseDateLabel() {
+        if (!this.confirmation?.purchaseDate) {
+            return '—';
+        }
+        const value = this.confirmation.purchaseDate;
+        const date = typeof value === 'string' ? new Date(`${value}T00:00:00`) : new Date(value);
+        return new Intl.DateTimeFormat('pt-BR').format(date);
+    }
+
+    get priorityLabel() {
+        const value = this.confirmation?.priority;
+        if (value === 'High') {
+            return 'Alta';
+        }
+        if (value === 'Medium') {
+            return 'Média';
+        }
+        if (value === 'Low') {
+            return 'Baixa';
+        }
+        return value || '—';
+    }
+
     handleResultado(event) {
         this.resultado = event.detail.value;
-    }
-
-    handleOpen() {
-        this.dispatchEvent(new CustomEvent('opencase'));
-    }
-
-    handleNew() {
-        this.dispatchEvent(new CustomEvent('newcase'));
     }
 
     async handleResolve() {
@@ -44,15 +58,6 @@ export default class TechlarCaseConfirmation extends LightningElement {
             this.errorMessage = error?.body?.message || 'Não foi possível concluir o atendimento.';
         } finally {
             this.isSaving = false;
-        }
-    }
-
-    async handleRefresh() {
-        try {
-            const latest = await getCase({ caseId: this.confirmation.caseId });
-            this.dispatchEvent(new CustomEvent('caseupdated', { detail: latest }));
-        } catch (error) {
-            this.errorMessage = error?.body?.message || 'Não foi possível atualizar o atendimento.';
         }
     }
 }

@@ -1,16 +1,16 @@
 import { LightningElement, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { NavigationMixin } from 'lightning/navigation';
 import searchCustomers from '@salesforce/apex/TechLarSalesController.searchCustomers';
-import getOrders from '@salesforce/apex/TechLarServiceController.getOrders';
+import getWorkspace from '@salesforce/apex/TechLarServiceController.getWorkspace';
 import createCase from '@salesforce/apex/TechLarServiceController.createCase';
 import getCase from '@salesforce/apex/TechLarServiceController.getCase';
 
-export default class TechlarServicePage extends NavigationMixin(LightningElement) {
+export default class TechlarServicePage extends LightningElement {
     searchTerm = '';
     @track customer;
     @track results = [];
     @track orders = [];
+    @track cases = [];
     @track selectedItem;
     @track confirmation;
     motivo = '';
@@ -26,6 +26,41 @@ export default class TechlarServicePage extends NavigationMixin(LightningElement
 
     get hasResults() {
         return this.results.length > 0;
+    }
+
+    get hasConfirmation() {
+        return Boolean(this.confirmation?.caseId);
+    }
+
+    get hasCases() {
+        return this.cases.length > 0;
+    }
+
+    get showEmptyCases() {
+        return this.hasCustomer && !this.isLoadingOrders && this.cases.length === 0;
+    }
+
+    get customerRows() {
+        return (this.results || []).map((row, index) => {
+            const selected = this.customer?.accountId === row.accountId;
+            return {
+                ...row,
+                index,
+                selected,
+                buttonLabel: selected ? 'Selecionado' : 'Selecionar',
+                buttonVariant: selected ? 'brand' : 'neutral',
+                buttonIcon: selected ? 'utility:success' : undefined,
+                rowClass: selected ? 'result-row result-row_selected' : 'result-row'
+            };
+        });
+    }
+
+    get caseRows() {
+        return (this.cases || []).map((row) => ({
+            ...row,
+            buttonClass:
+                this.confirmation?.caseId === row.caseId ? 'result-btn result-btn_selected' : 'result-btn'
+        }));
     }
 
     handleTermChange(event) {
@@ -64,12 +99,19 @@ export default class TechlarServicePage extends NavigationMixin(LightningElement
         this.selectedItem = null;
         this.motivo = '';
         this.description = '';
-        this.isLoadingOrders = true;
         this.errorMessage = undefined;
+        await this.loadWorkspace(customer.accountId);
+    }
+
+    async loadWorkspace(accountId) {
+        this.isLoadingOrders = true;
         try {
-            this.orders = await getOrders({ accountId: customer.accountId });
+            const workspace = await getWorkspace({ accountId });
+            this.orders = workspace?.orders || [];
+            this.cases = workspace?.cases || [];
         } catch (error) {
             this.orders = [];
+            this.cases = [];
             this.errorMessage = this.reduceError(error);
         } finally {
             this.isLoadingOrders = false;
@@ -80,6 +122,17 @@ export default class TechlarServicePage extends NavigationMixin(LightningElement
         this.selectedItem = event.detail;
         this.confirmation = null;
         this.errorMessage = undefined;
+    }
+
+    async handleSelectCase(event) {
+        const caseId = event.currentTarget.dataset.id;
+        this.errorMessage = undefined;
+        try {
+            this.confirmation = await getCase({ caseId });
+            this.selectedItem = null;
+        } catch (error) {
+            this.errorMessage = this.reduceError(error);
+        }
     }
 
     handleFormChange(event) {
@@ -124,6 +177,7 @@ export default class TechlarServicePage extends NavigationMixin(LightningElement
             });
             this.confirmation = await getCase({ caseId: created.caseId });
             this.confirmation = { ...this.confirmation, message: created.message };
+            await this.loadWorkspace(this.customer.accountId);
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Atendimento aberto',
@@ -145,8 +199,11 @@ export default class TechlarServicePage extends NavigationMixin(LightningElement
         }
     }
 
-    handleCaseUpdated(event) {
+    async handleCaseUpdated(event) {
         this.confirmation = event.detail;
+        if (this.customer?.accountId) {
+            await this.loadWorkspace(this.customer.accountId);
+        }
     }
 
     handleNewCase() {
@@ -155,20 +212,6 @@ export default class TechlarServicePage extends NavigationMixin(LightningElement
         this.motivo = '';
         this.description = '';
         this.errorMessage = undefined;
-    }
-
-    handleOpenRecord() {
-        if (!this.confirmation?.caseId) {
-            return;
-        }
-        this[NavigationMixin.Navigate]({
-            type: 'standard__recordPage',
-            attributes: {
-                recordId: this.confirmation.caseId,
-                objectApiName: 'Case',
-                actionName: 'view'
-            }
-        });
     }
 
     reduceError(error) {

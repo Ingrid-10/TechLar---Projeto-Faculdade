@@ -59,6 +59,17 @@ public with sharing class TechLarServiceService {
         @AuraEnabled public String productName { get; set; }
         @AuraEnabled public String orderNumber { get; set; }
         @AuraEnabled public String message { get; set; }
+        @AuraEnabled public String description { get; set; }
+        @AuraEnabled public Date purchaseDate { get; set; }
+        @AuraEnabled public String priority { get; set; }
+        @AuraEnabled public String accountName { get; set; }
+        @AuraEnabled public String accountCpf { get; set; }
+        @AuraEnabled public Datetime createdDate { get; set; }
+    }
+
+    public class WorkspaceDTO {
+        @AuraEnabled public List<OrderDTO> orders { get; set; }
+        @AuraEnabled public List<CaseResult> cases { get; set; }
     }
 
     public static List<OrderDTO> getOrders(Id accountId) {
@@ -100,6 +111,24 @@ public with sharing class TechLarServiceService {
             result.add(dto);
         }
         return result;
+    }
+
+    public static WorkspaceDTO getWorkspace(Id accountId) {
+        WorkspaceDTO workspace = new WorkspaceDTO();
+        workspace.orders = getOrders(accountId);
+        workspace.cases = new List<CaseResult>();
+        for (Case record : [
+            SELECT Id, CaseNumber, Status, MotivoPosVenda__c, ResultadoAtendimento__c, Description,
+                   Priority, CreatedDate, DataDaCompra__c, Owner.Name, Produto__r.Name,
+                   Pedido__r.OrderNumber, Account.Name, Account.CPF__c
+            FROM Case
+            WHERE AccountId = :accountId AND ClienteTechLar__c = TRUE
+            ORDER BY CreatedDate DESC
+            LIMIT 20
+        ]) {
+            workspace.cases.add(toResult(record, null));
+        }
+        return workspace;
     }
 
     public static CaseResult createCase(CaseRequest request) {
@@ -207,8 +236,9 @@ public with sharing class TechLarServiceService {
 
     private static Case loadCase(Id caseId) {
         return [
-            SELECT Id, CaseNumber, Status, MotivoPosVenda__c, ResultadoAtendimento__c,
-                   Owner.Name, Produto__r.Name, Pedido__r.OrderNumber
+            SELECT Id, CaseNumber, Status, MotivoPosVenda__c, ResultadoAtendimento__c, Description,
+                   Priority, CreatedDate, DataDaCompra__c, Owner.Name, Produto__r.Name,
+                   Pedido__r.OrderNumber, Account.Name, Account.CPF__c
             FROM Case
             WHERE Id = :caseId
             LIMIT 1
@@ -222,11 +252,17 @@ public with sharing class TechLarServiceService {
         result.status = record.Status;
         result.statusLabel = statusLabel(record.Status);
         result.motivo = record.MotivoPosVenda__c;
-        result.ownerName = record.Owner.Name;
+        result.ownerName = record.Owner == null ? null : record.Owner.Name;
         result.resultado = record.ResultadoAtendimento__c;
         result.productName = record.Produto__r == null ? null : record.Produto__r.Name;
         result.orderNumber = record.Pedido__r == null ? null : record.Pedido__r.OrderNumber;
         result.message = message;
+        result.description = record.Description;
+        result.purchaseDate = record.DataDaCompra__c;
+        result.priority = record.Priority;
+        result.accountName = record.Account == null ? null : record.Account.Name;
+        result.accountCpf = record.Account == null ? null : record.Account.CPF__c;
+        result.createdDate = record.CreatedDate;
         return result;
     }
 

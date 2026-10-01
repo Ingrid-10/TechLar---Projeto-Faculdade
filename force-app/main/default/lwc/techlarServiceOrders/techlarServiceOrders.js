@@ -5,6 +5,7 @@ export default class TechlarServiceOrders extends LightningElement {
     @api selectedItem;
     @api isLoading = false;
     @api hasCustomer = false;
+    @api readOnly = false;
 
     get showEmptyCustomer() {
         return !this.hasCustomer;

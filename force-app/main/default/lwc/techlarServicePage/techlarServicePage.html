@@ -4,10 +4,10 @@
             <div>
                 <p class="eyebrow">TechLar 360</p>
                 <h1>Atendimento</h1>
-                <p class="subtitle">Pós-venda unificado à compra em loja física</p>
+                <p class="subtitle">Cliente, histórico de compras e Case no mesmo workspace</p>
             </div>
             <lightning-button
-                if:true={confirmation}
+                if:true={hasCustomer}
                 label="Novo atendimento"
                 onclick={handleNewCase}
                 variant="neutral"
@@ -18,79 +18,132 @@
             {errorMessage}
         </div>
 
-        <c-techlar-case-confirmation
-            if:true={confirmation}
-            confirmation={confirmation}
-            onopencase={handleOpenRecord}
-            onnewcase={handleNewCase}
-            oncaseupdated={handleCaseUpdated}
-        ></c-techlar-case-confirmation>
-
-        <template if:false={confirmation}>
-            <lightning-card title="Cliente" icon-name="standard:account">
-                <div class="slds-p-horizontal_medium slds-p-bottom_medium">
-                    <div class="search-row">
-                        <lightning-input
-                            type="search"
-                            label="Pesquisar cliente"
-                            placeholder="Nome, e-mail, telefone ou CPF"
-                            value={searchTerm}
-                            onchange={handleTermChange}
-                            onkeydown={handleKey}
-                        ></lightning-input>
-                        <lightning-button
-                            class="slds-m-top_large"
-                            label="Buscar"
-                            variant="brand"
-                            onclick={handleSearch}
-                            disabled={isSearching}
-                        ></lightning-button>
-                    </div>
-
-                    <template if:true={customer}>
-                        <div class="selected-box slds-m-top_medium">
-                            <p class="slds-text-heading_small">{customer.name}</p>
-                            <p>{customer.email}</p>
-                            <p>{customer.phone} · CPF {customer.cpf}</p>
-                        </div>
-                    </template>
-
-                    <ul if:true={hasResults} class="slds-m-top_small result-list">
-                        <template for:each={results} for:item="row" for:index="index">
-                            <li key={row.accountId}>
-                                <button class="result-btn" data-index={index} onclick={handleSelect}>
-                                    <strong>{row.name}</strong>
-                                    <span>{row.email} · {row.cpf}</span>
-                                </button>
-                            </li>
-                        </template>
-                    </ul>
+        <lightning-card title="Cliente" icon-name="standard:account">
+            <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                <div class="search-row">
+                    <lightning-input
+                        type="search"
+                        label="Pesquisar cliente"
+                        placeholder="Nome, e-mail, telefone ou CPF"
+                        value={searchTerm}
+                        onchange={handleTermChange}
+                        onkeydown={handleKey}
+                    ></lightning-input>
+                    <lightning-button
+                        class="slds-m-top_large"
+                        label="Buscar"
+                        variant="brand"
+                        onclick={handleSearch}
+                        disabled={isSearching}
+                    ></lightning-button>
                 </div>
-            </lightning-card>
+
+                <ul if:true={hasResults} class="slds-m-top_small result-list">
+                    <template for:each={customerRows} for:item="row">
+                        <li key={row.accountId}>
+                            <div class={row.rowClass}>
+                                <div>
+                                    <strong>{row.name}</strong>
+                                    <span>{row.email} · CPF {row.cpf}</span>
+                                </div>
+                                <lightning-button
+                                    label={row.buttonLabel}
+                                    variant={row.buttonVariant}
+                                    icon-name={row.buttonIcon}
+                                    data-index={row.index}
+                                    onclick={handleSelect}
+                                ></lightning-button>
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+
+                <template if:true={customer}>
+                    <div class="customer-selected slds-m-top_medium">
+                        <div class="customer-selected__badge">
+                            <lightning-icon
+                                icon-name="utility:success"
+                                size="xx-small"
+                                variant="inverse"
+                                alternative-text="Selecionado"
+                            ></lightning-icon>
+                            <span>Cliente selecionado</span>
+                        </div>
+                        <p class="customer-selected__name">{customer.name}</p>
+                        <p class="customer-selected__meta">{customer.email}</p>
+                        <p class="customer-selected__meta">{customer.phone} · CPF {customer.cpf}</p>
+                        <lightning-record-view-form
+                            record-id={customer.accountId}
+                            object-api-name="Account"
+                            density="comfy"
+                        >
+                            <div class="account-grid">
+                                <lightning-output-field field-name="BillingStreet"></lightning-output-field>
+                                <lightning-output-field field-name="BillingCity"></lightning-output-field>
+                                <lightning-output-field field-name="BillingState"></lightning-output-field>
+                                <lightning-output-field field-name="BillingPostalCode"></lightning-output-field>
+                            </div>
+                        </lightning-record-view-form>
+                    </div>
+                </template>
+            </div>
+        </lightning-card>
+
+        <template if:true={hasCustomer}>
+            <c-techlar-case-confirmation
+                if:true={confirmation}
+                confirmation={confirmation}
+                oncaseupdated={handleCaseUpdated}
+            ></c-techlar-case-confirmation>
+
+            <template if:false={confirmation}>
+                <c-techlar-case-form
+                    selected-item={selectedItem}
+                    motivo={motivo}
+                    description={description}
+                    onformchange={handleFormChange}
+                ></c-techlar-case-form>
+                <div class="footer-actions">
+                    <lightning-button
+                        label="Abrir atendimento"
+                        variant="brand"
+                        disabled={isSaving}
+                        onclick={handleOpenCase}
+                    ></lightning-button>
+                </div>
+            </template>
 
             <c-techlar-service-orders
                 orders={orders}
                 selected-item={selectedItem}
                 is-loading={isLoadingOrders}
                 has-customer={hasCustomer}
+                read-only={hasConfirmation}
                 onitemselected={handleItemSelected}
             ></c-techlar-service-orders>
 
-            <c-techlar-case-form
-                selected-item={selectedItem}
-                motivo={motivo}
-                description={description}
-                onformchange={handleFormChange}
-            ></c-techlar-case-form>
-
-            <div class="footer-actions">
-                <lightning-button
-                    label="Abrir atendimento"
-                    variant="brand"
-                    disabled={isSaving}
-                    onclick={handleOpenCase}
-                ></lightning-button>
-            </div>
+            <lightning-card title="Histórico de atendimentos" icon-name="standard:case" class="slds-m-top_medium">
+                <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                    <p if:true={isLoadingOrders} class="slds-text-color_weak">Carregando histórico...</p>
+                    <p if:true={showEmptyCases} class="slds-text-color_weak">
+                        Este cliente ainda não possui atendimentos TechLar.
+                    </p>
+                    <ul if:true={hasCases} class="case-history">
+                        <template for:each={caseRows} for:item="row">
+                            <li key={row.caseId}>
+                                <button
+                                    class={row.buttonClass}
+                                    data-id={row.caseId}
+                                    onclick={handleSelectCase}
+                                >
+                                    <strong>Case {row.caseNumber}</strong>
+                                    <span>{row.statusLabel} · {row.motivo} · {row.productName}</span>
+                                </button>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </lightning-card>
         </template>
     </div>
 </template>

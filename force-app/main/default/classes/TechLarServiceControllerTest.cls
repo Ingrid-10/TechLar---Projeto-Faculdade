@@ -68,6 +68,9 @@ private class TechLarServiceControllerTest {
         System.assertEquals(1, orders.size());
         System.assertEquals(1, orders[0].items.size());
         System.assertEquals('Notebook TechLar X', orders[0].items[0].productName);
+        TechLarServiceService.WorkspaceDTO workspace = TechLarServiceController.getWorkspace(customer.Id);
+        System.assertEquals(1, workspace.orders.size());
+        System.assertEquals(0, workspace.cases.size());
     }
 
     @IsTest
@@ -107,6 +110,11 @@ private class TechLarServiceControllerTest {
             fila.Name.contains('Pós-venda') || fila.Name.contains('Pos-venda') || fila.Name.contains('Pós'),
             fila.Name
         );
+        System.assertEquals('Ana Souza', reloaded.accountName);
+        System.assertEquals('O notebook apresentou defeito na tela após a compra em loja.', reloaded.description);
+        TechLarServiceService.WorkspaceDTO workspace = TechLarServiceController.getWorkspace(customer.Id);
+        System.assertEquals(1, workspace.cases.size());
+        System.assertEquals(result.caseId, workspace.cases[0].caseId);
     }
 
     @IsTest

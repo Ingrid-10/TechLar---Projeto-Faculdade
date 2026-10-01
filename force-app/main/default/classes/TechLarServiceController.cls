@@ -10,6 +10,17 @@ public with sharing class TechLarServiceController {
         }
     }
 
+    @AuraEnabled(cacheable=false)
+    public static TechLarServiceService.WorkspaceDTO getWorkspace(Id accountId) {
+        try {
+            return TechLarServiceService.getWorkspace(accountId);
+        } catch (AuraHandledException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw handled('Erro ao consultar o histórico do cliente: ' + ex.getMessage());
+        }
+    }
+
     @AuraEnabled
     public static TechLarServiceService.CaseResult createCase(TechLarServiceService.CaseRequest request) {
         try {

@@ -1,5 +1,5 @@
 <template>
-    <lightning-card title="Compras" icon-name="standard:orders" class="slds-m-top_medium">
+    <lightning-card title="Histórico de compras" icon-name="standard:orders" class="slds-m-top_medium">
         <div class="slds-p-horizontal_medium slds-p-bottom_medium">
             <p if:true={showEmptyCustomer} class="slds-text-color_weak">
                 Pesquise um cliente para ver o histórico de compras da Sprint 1.
@@ -19,6 +19,7 @@
                                     <span>{item.quantity} un. · {item.formattedLine}</span>
                                 </div>
                                 <lightning-button
+                                    if:false={readOnly}
                                     label={item.buttonLabel}
                                     variant={item.buttonVariant}
                                     data-item={item.orderItemId}
