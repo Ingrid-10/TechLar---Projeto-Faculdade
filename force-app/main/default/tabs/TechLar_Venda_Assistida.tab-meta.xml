@@ -2,6 +2,6 @@
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Página de venda assistida em loja física</description>
     <lwcComponent>techlarSalesPage</lwcComponent>
-    <label>Nova Venda</label>
+    <label>Vendas</label>
     <motif>Custom57: Building</motif>
 </CustomTab>

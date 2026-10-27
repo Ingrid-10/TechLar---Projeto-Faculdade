@@ -1,7 +1,8 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { NavigationMixin } from 'lightning/navigation';
+import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import createSale from '@salesforce/apex/TechLarSalesController.createSale';
+import getCatalogProduct from '@salesforce/apex/TechLarSalesController.getCatalogProduct';
 
 export default class TechlarSalesPage extends NavigationMixin(LightningElement) {
     @track customer;
@@ -18,6 +19,18 @@ export default class TechlarSalesPage extends NavigationMixin(LightningElement) 
     @track confirmation;
     isSaving = false;
     errorMessage;
+    appliedCartToken;
+
+    @wire(CurrentPageReference)
+    receiveCartRequest(pageRef) {
+        const productId = pageRef?.state?.c__productId;
+        const token = pageRef?.state?.c__cartToken;
+        if (!productId || !token || token === this.appliedCartToken) {
+            return;
+        }
+        this.appliedCartToken = token;
+        this.addProductFromStock(productId);
+    }
 
     get hasCustomer() {
         return Boolean(this.customer?.accountId);
@@ -77,6 +90,23 @@ export default class TechlarSalesPage extends NavigationMixin(LightningElement) 
             ];
         }
         this.confirmation = null;
+    }
+
+    async addProductFromStock(productId) {
+        this.errorMessage = undefined;
+        try {
+            const product = await getCatalogProduct({ productId });
+            this.handleProductAdded({ detail: product });
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Produto no carrinho',
+                    message: product.name + ' foi adicionado a partir do estoque da loja.',
+                    variant: 'success'
+                })
+            );
+        } catch (error) {
+            this.errorMessage = this.reduceError(error);
+        }
     }
 
     handleCartChanged(event) {

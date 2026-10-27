@@ -1,0 +1,144 @@
+<template>
+    <div class="sales-shell">
+        <header class="sales-header">
+            <div>
+                <p class="eyebrow">TechLar</p>
+                <h1>{storeName}</h1>
+                <p class="subtitle">{pageSubtitle}</p>
+            </div>
+        </header>
+
+        <div if:true={errorMessage} class="slds-alert slds-alert_error slds-m-bottom_medium" role="alert">
+            {errorMessage}
+        </div>
+
+        <div if:true={receivedTransfer} class="confirmation" role="status">
+            <p class="customer-selected__badge">Pedido {receivedTransfer.transferName}</p>
+            <p class="customer-selected__name">{receivedTransfer.productName}</p>
+            <p class="decrease">{originDecrease}</p>
+            <p class="customer-selected__meta">{destinationIncrease}</p>
+            <p class="customer-selected__meta">Estoque desta loja agora: {balanceLabel}</p>
+        </div>
+
+        <lightning-card title="Produto" icon-name="standard:product">
+            <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                <div class="search-row">
+                    <lightning-input
+                        type="search"
+                        label={searchLabel}
+                        placeholder="Nome ou código. Ex.: Notebook TechLar X"
+                        value={searchTerm}
+                        onchange={handleTermChange}
+                        onkeydown={handleKey}
+                    ></lightning-input>
+                    <lightning-button
+                        class="slds-m-top_large"
+                        label="Buscar"
+                        variant="brand"
+                        onclick={handleSearch}
+                        disabled={isSearching}
+                    ></lightning-button>
+                </div>
+
+                <template if:true={isSearching}>
+                    <lightning-spinner alternative-text="Buscando" size="small"></lightning-spinner>
+                </template>
+
+                <p if:true={showEmpty} class="empty">{emptyMessage}</p>
+
+                <ul if:true={hasResults} class="result-list">
+                    <template for:each={results} for:item="item">
+                        <li key={item.productId} class={resultItemClass}>
+                            <button
+                                type="button"
+                                class="result-btn"
+                                data-id={item.productId}
+                                onclick={handleSelect}
+                            >
+                                <strong>{item.name}</strong>
+                                <span>{item.quantityLabel}</span>
+                            </button>
+                            <lightning-button
+                                if:false={isGeneral}
+                                label="Adicionar ao carrinho"
+                                data-id={item.productId}
+                                onclick={handleAddToCart}
+                            ></lightning-button>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        </lightning-card>
+
+        <template if:true={hasProduct}>
+            <lightning-card if:false={isGeneral} title="Estoque nesta loja" icon-name="standard:store">
+                <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                    <p class="product-name">{product.name}</p>
+                    <p class="balance">{balanceLabel}</p>
+                </div>
+            </lightning-card>
+
+            <template if:true={isGeneral}>
+                <lightning-card title="Estoque por loja" icon-name="standard:store">
+                    <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                        <p class="product-name">{product.name}</p>
+                        <ul class="result-list">
+                            <template for:each={stockLines} for:item="line">
+                                <li key={line.estoqueId} class="result-row">
+                                    <strong>{line.lojaName}</strong>
+                                    <span>{line.label}</span>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                </lightning-card>
+
+                <lightning-card title="Pedir de outra loja" icon-name="standard:shipment">
+                    <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                        <p class="origin-note">Destino: {storeName}</p>
+                        <div class="form-grid">
+                            <lightning-combobox
+                                label="Loja de origem"
+                                placeholder="Selecione a outra loja"
+                                value={originStoreId}
+                                options={originOptions}
+                                onchange={handleOriginChange}
+                            ></lightning-combobox>
+                            <lightning-input
+                                type="number"
+                                label="Quantidade"
+                                min="1"
+                                step="1"
+                                value={quantity}
+                                onchange={handleQuantityChange}
+                            ></lightning-input>
+                        </div>
+                        <div class="footer-actions">
+                            <lightning-button
+                                label="Pedir transferência"
+                                variant="brand"
+                                disabled={transferDisabled}
+                                onclick={handleTransfer}
+                            ></lightning-button>
+                        </div>
+                    </div>
+                </lightning-card>
+
+                <div if:true={confirmation} class="confirmation" role="status">
+                    <p class="customer-selected__badge">Pedido concluído</p>
+                    <p class="customer-selected__name">{confirmation.transferName}</p>
+                    <p class="decrease">{confirmationDecrease}</p>
+                    <p class="customer-selected__meta">{confirmation.message}</p>
+                    <p class="customer-selected__meta">Estoque desta loja agora: {balanceLabel}</p>
+                    <div class="footer-actions">
+                        <lightning-button
+                            label={otherAppLabel}
+                            variant="brand"
+                            onclick={openOriginApp}
+                        ></lightning-button>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+</template>

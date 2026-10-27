@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CPF__c</fullName>
     <caseSensitive>false</caseSensitive>
-    <description>CPF fictício do cliente TechLar. Chave de unificação prevista para a Sprint 3 (Data 360).</description>
+    <description>CPF fictício do cliente TechLar.</description>
     <externalId>true</externalId>
     <inlineHelpText>Somente números ou formato 000.000.000-00. Dados fictícios do projeto.</inlineHelpText>
     <label>CPF</label>

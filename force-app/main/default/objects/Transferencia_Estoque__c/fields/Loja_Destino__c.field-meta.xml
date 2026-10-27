@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Loja_Destino__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>Loja que recebe as unidades.</description>
+    <label>Loja Destino</label>
+    <referenceTo>Loja__c</referenceTo>
+    <relationshipLabel>Transferências de Destino</relationshipLabel>
+    <relationshipName>Transferencias_Destino</relationshipName>
+    <required>true</required>
+    <type>Lookup</type>
+</CustomField>

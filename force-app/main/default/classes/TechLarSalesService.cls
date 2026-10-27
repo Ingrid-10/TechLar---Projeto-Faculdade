@@ -204,6 +204,34 @@ public with sharing class TechLarSalesService {
         return result;
     }
 
+    public static ProductDTO getCatalogProduct(Id productId) {
+        if (productId == null) {
+            throw handled('O produto informado não existe.');
+        }
+        Id catalogId = getCatalogPricebookId();
+        List<PricebookEntry> entries = [
+            SELECT Id, UnitPrice, Product2Id, Product2.Name, Product2.ProductCode, Product2.Description
+            FROM PricebookEntry
+            WHERE IsActive = TRUE
+              AND Product2.IsActive = TRUE
+              AND Product2Id = :productId
+              AND Pricebook2Id = :catalogId
+            LIMIT 1
+        ];
+        if (entries.isEmpty()) {
+            throw handled('Este produto não está no catálogo de vendas.');
+        }
+        PricebookEntry entry = entries[0];
+        ProductDTO dto = new ProductDTO();
+        dto.pricebookEntryId = entry.Id;
+        dto.productId = entry.Product2Id;
+        dto.name = entry.Product2.Name;
+        dto.productCode = entry.Product2.ProductCode;
+        dto.description = entry.Product2.Description;
+        dto.unitPrice = entry.UnitPrice;
+        return dto;
+    }
+
     public static SaleResult createSale(SaleRequest request) {
         validateSale(request);
 

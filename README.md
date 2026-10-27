@@ -1,6 +1,6 @@
 # TechLar 360
 
-Plataforma Salesforce da TechLar para centralizar vendas em loja física, atendimento, visão única do cliente e inteligência artificial. Desenvolvida em 4 sprints para o projeto final de Análise e Desenvolvimento de Sistemas.
+Plataforma Salesforce da TechLar para centralizar vendas em loja física, atendimento, estoque entre lojas e inteligência artificial. Desenvolvida em 4 sprints para o projeto final de Análise e Desenvolvimento de Sistemas.
 
 ## Sprint 1 — Venda Assistida em Loja Física (AC1 — 14/09)
 
@@ -45,9 +45,31 @@ sf org open --target-org techlar --path /lightning/n/TechLar_Atendimento
 
 Abra a aba **Atendimento**.
 
+## Sprint 3 — Gestão de Estoque e Transferência entre Lojas (AC3 — 08/11)
+
+Aba **Estoque** para pesquisar um produto, ver o saldo por loja e transferir unidades. O Apex valida a quantidade, grava a transferência, atualiza os dois saldos e registra a movimentação.
+
+Documentação: [docs/sprint-3.md](docs/sprint-3.md)
+
+Board: [mesmo Project](https://github.com/users/Ingrid-10/projects/1) (view **Sprint 3**)
+
+Dados fictícios: [mock-data/README.md](mock-data/README.md)
+
+Os dados utilizados no projeto são totalmente fictícios e foram criados exclusivamente para fins acadêmicos.
+
+```bash
+sf org assign permset --name TechLar_Estoque --target-org techlar
+sf apex run --file scripts/apex/loadMockData.apex --target-org techlar
+sf apex run --file scripts/apex/loadEstoqueMock.apex --target-org techlar
+sf org open --target-org techlar --path /lightning/n/TechLar_Estoque
+```
+
+Abra a aba **Estoque**.
+
 ## Stack
 
 - LWC (front-end)
 - Apex (regras de negócio)
-- Account, Contact, Product2, PricebookEntry, Order, OrderItem, Case (dados)
+- Account, Contact, Product2, PricebookEntry, Order, OrderItem, Case (CRM)
+- Loja__c, Estoque__c, Transferencia_Estoque__c, Movimentacao_Estoque__c
 - Flow (encaminhamento do Case)

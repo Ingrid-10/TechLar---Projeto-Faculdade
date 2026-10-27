@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Estoque da loja TechLar Morumbi</description>
+    <flexiPage>TechLar_Estoque_Morumbi</flexiPage>
+    <label>Estoque da loja</label>
+    <motif>Custom63: Factory</motif>
+</CustomTab>

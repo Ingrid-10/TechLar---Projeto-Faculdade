@@ -22,6 +22,17 @@ public with sharing class TechLarSalesController {
     }
 
     @AuraEnabled(cacheable=false)
+    public static TechLarSalesService.ProductDTO getCatalogProduct(Id productId) {
+        try {
+            return TechLarSalesService.getCatalogProduct(productId);
+        } catch (AuraHandledException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw handled('Erro ao incluir o produto no carrinho: ' + ex.getMessage());
+        }
+    }
+
+    @AuraEnabled(cacheable=false)
     public static List<TechLarSalesService.ProductDTO> searchProducts(String searchTerm) {
         try {
             return TechLarSalesService.searchProducts(searchTerm);

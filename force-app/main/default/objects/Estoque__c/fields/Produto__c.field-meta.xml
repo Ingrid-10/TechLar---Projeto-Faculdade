@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Produto__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Produto do catálogo TechLar (Product2 da Sprint 1).</description>
+    <label>Produto</label>
+    <referenceTo>Product2</referenceTo>
+    <relationshipLabel>Estoques</relationshipLabel>
+    <relationshipName>Estoques</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

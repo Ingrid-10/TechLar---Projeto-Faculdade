@@ -145,6 +145,10 @@ private class TechLarSalesControllerTest {
         System.assertEquals(1, notebook.size());
         System.assertEquals(4999, notebook[0].unitPrice);
         System.assertNotEquals(null, notebook[0].pricebookEntryId);
+        Product2 stored = [SELECT Id FROM Product2 WHERE ProductCode = 'TL-NB-001' LIMIT 1];
+        TechLarSalesService.ProductDTO fromStock = TechLarSalesController.getCatalogProduct(stored.Id);
+        System.assertEquals(notebook[0].pricebookEntryId, fromStock.pricebookEntryId);
+        System.assertEquals(4999, fromStock.unitPrice);
     }
 
     @IsTest
