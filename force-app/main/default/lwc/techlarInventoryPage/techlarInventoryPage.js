@@ -3,14 +3,11 @@ import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
 import getStore from '@salesforce/apex/TechLarInventoryController.getStore';
 import getStock from '@salesforce/apex/TechLarInventoryController.getStock';
 import searchProducts from '@salesforce/apex/TechLarInventoryController.searchProducts';
-import transferStock from '@salesforce/apex/TechLarInventoryController.transferStock';
+import requestStock from '@salesforce/apex/TechLarInventoryController.requestStock';
+import listOpenTransfers from '@salesforce/apex/TechLarInventoryController.listOpenTransfers';
+import resumeStock from '@salesforce/apex/TechLarInventoryController.resumeStock';
+import advanceStock from '@salesforce/apex/TechLarInventoryController.advanceStock';
 import getTransferView from '@salesforce/apex/TechLarInventoryController.getTransferView';
-
-const STORE_APPS = {
-    PAULISTA: { app: 'c__TechLar_Paulista', tab: 'TechLar_Estoque_Paulista' },
-    MORUMBI: { app: 'c__TechLar_Morumbi', tab: 'TechLar_Estoque_Morumbi' },
-    SANTANA: { app: 'c__TechLar_Santana', tab: 'TechLar_Estoque_Santana' }
-};
 
 export default class TechlarInventoryPage extends NavigationMixin(LightningElement) {
     @api storeCode;
@@ -31,6 +28,8 @@ export default class TechlarInventoryPage extends NavigationMixin(LightningEleme
     isSaving = false;
     searched = false;
     transferId;
+    openTransfers = [];
+    showOpenTransfers = false;
 
     @wire(CurrentPageReference)
     receivePage(pageRef) {
@@ -97,8 +96,25 @@ export default class TechlarInventoryPage extends NavigationMixin(LightningEleme
         return this.isSaving || !this.store || !this.originStoreId || !this.quantity;
     }
 
-    get otherAppLabel() {
-        return this.confirmation ? `Abrir aplicativo ${this.confirmation.originName}` : '';
+    get canAdvance() {
+        return Boolean(this.confirmation && this.confirmation.advanceLabel);
+    }
+
+    get advanceLabel() {
+        return this.confirmation ? this.confirmation.advanceLabel : '';
+    }
+
+    get openTransfersLabel() {
+        const count = this.openTransfers.length;
+        return count ? `Transferências em aberto (${count})` : 'Transferências em aberto';
+    }
+
+    get hasOpenTransfers() {
+        return this.openTransfers.length > 0;
+    }
+
+    get noOpenTransfers() {
+        return this.showOpenTransfers && !this.hasOpenTransfers;
     }
 
     get confirmationDecrease() {
@@ -164,6 +180,9 @@ export default class TechlarInventoryPage extends NavigationMixin(LightningEleme
             const context = await getStore({ storeCode: this.storeCode });
             this.store = context;
             this.destinations = context.destinations || [];
+            if (this.isGeneral) {
+                this.refreshOpenTransfers();
+            }
             if (this.transferId) {
                 this.loadReceivedTransfer();
             }
@@ -230,19 +249,16 @@ export default class TechlarInventoryPage extends NavigationMixin(LightningEleme
         this.errorMessage = undefined;
         this.confirmation = undefined;
         try {
-            this.confirmation = await transferStock({
+            this.applyConfirmation(await requestStock({
                 request: {
                     productId: this.product.productId,
                     originStoreId: this.originStoreId,
                     destinationStoreId: this.store.lojaId,
                     quantity: Number(this.quantity)
                 }
-            });
-            this.product = {
-                ...this.product,
-                quantidade: this.confirmation.destinationBalance
-            };
+            }));
             await this.loadAllStock();
+            await this.refreshOpenTransfers();
         } catch (error) {
             this.errorMessage = this.messageFrom(error, 'Não foi possível pedir o estoque.');
         } finally {
@@ -250,26 +266,81 @@ export default class TechlarInventoryPage extends NavigationMixin(LightningEleme
         }
     }
 
-    openOriginApp() {
-        const target = STORE_APPS[this.confirmation?.originCode];
-        if (!target) {
+    async handleAdvance() {
+        if (!this.confirmation || !this.confirmation.transferId) {
             return;
         }
-        this[NavigationMixin.Navigate]({
-            type: 'standard__app',
-            attributes: {
-                appTarget: target.app,
-                pageRef: {
-                    type: 'standard__navItemPage',
-                    attributes: {
-                        apiName: target.tab
-                    },
-                    state: {
-                        c__transferId: this.confirmation.transferId
-                    }
-                }
+        this.isSaving = true;
+        this.errorMessage = undefined;
+        try {
+            this.applyConfirmation(await advanceStock({ transferId: this.confirmation.transferId }));
+            await this.loadAllStock();
+            await this.refreshOpenTransfers();
+        } catch (error) {
+            this.errorMessage = this.messageFrom(error, 'Não foi possível avançar a transferência.');
+        } finally {
+            this.isSaving = false;
+        }
+    }
+
+    toggleOpenTransfers() {
+        this.showOpenTransfers = !this.showOpenTransfers;
+    }
+
+    async handleOpenTransfer(event) {
+        const transferId = event.currentTarget.dataset.id;
+        if (!transferId) {
+            return;
+        }
+        this.isSaving = true;
+        this.errorMessage = undefined;
+        try {
+            this.applyConfirmation(await resumeStock({ transferId }));
+            await this.loadAllStock();
+            this.refreshOpenTransfers();
+        } catch (error) {
+            this.errorMessage = this.messageFrom(error, 'Não foi possível abrir a transferência.');
+        } finally {
+            this.isSaving = false;
+        }
+    }
+
+    async refreshOpenTransfers() {
+        if (!this.isGeneral || !this.storeCode) {
+            return;
+        }
+        try {
+            this.decorateOpenTransfers(await listOpenTransfers({ storeCode: this.storeCode }));
+        } catch (error) {
+            this.openTransfers = [];
+            this.errorMessage = this.messageFrom(error, 'Não foi possível consultar as transferências em aberto.');
+        }
+    }
+
+    applyConfirmation(result) {
+        this.confirmation = result;
+        this.product = {
+            ...(this.product || {}),
+            productId: result.productId,
+            name: result.productName,
+            productCode: result.productCode,
+            quantidade: result.destinationBalance
+        };
+        this.decorateOpenTransfers(this.openTransfers);
+        Promise.resolve().then(() => {
+            const node = this.template.querySelector('.confirmation');
+            if (node) {
+                node.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         });
+    }
+
+    decorateOpenTransfers(rows) {
+        const currentId = this.confirmation && this.confirmation.transferId;
+        this.openTransfers = (rows || []).map((row) => ({
+            ...row,
+            rowClass: row.transferId === currentId ? 'result-btn result-btn_selected' : 'result-btn'
+        }));
     }
 
     async loadReceivedTransfer() {

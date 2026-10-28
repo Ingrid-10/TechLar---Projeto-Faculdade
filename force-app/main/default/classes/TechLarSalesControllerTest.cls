@@ -175,7 +175,7 @@ private class TechLarSalesControllerTest {
         System.assertEquals('Activated', [SELECT Status FROM Order WHERE Id = :result.orderId].Status);
         System.assertEquals(2, [SELECT COUNT() FROM OrderItem WHERE OrderId = :result.orderId]);
         Order stored = [
-            SELECT AccountId, CanalVenda__c, ModalidadeRecebimento__c, ClienteTechLar__c
+            SELECT AccountId, CanalVenda__c, ModalidadeRecebimento__c, ClienteTechLar__c, Loja__c
             FROM Order
             WHERE Id = :result.orderId
         ];
@@ -183,6 +183,30 @@ private class TechLarSalesControllerTest {
         System.assertEquals('Retirada na Loja', stored.ModalidadeRecebimento__c);
         System.assertEquals(customer.Id, stored.AccountId);
         System.assertEquals(true, stored.ClienteTechLar__c);
+        System.assertEquals(null, stored.Loja__c);
+    }
+
+    @IsTest
+    static void createSaleStoresTheAppStoreWithoutAPicker() {
+        Account customer = [SELECT Id FROM Account WHERE CPF__c = '111.111.111-11' LIMIT 1];
+        PricebookEntry notebook = [
+            SELECT Id FROM PricebookEntry WHERE Product2.ProductCode = 'TL-NB-001' LIMIT 1
+        ];
+        insert new List<Loja__c>{
+            new Loja__c(Name = 'TechLar Paulista', Codigo__c = 'PAULISTA', Cidade__c = 'São Paulo', Status__c = 'Ativa'),
+            new Loja__c(Name = 'TechLar Morumbi', Codigo__c = 'MORUMBI', Cidade__c = 'São Paulo', Status__c = 'Ativa'),
+            new Loja__c(Name = 'TechLar Santana', Codigo__c = 'SANTANA', Cidade__c = 'São Paulo', Status__c = 'Ativa')
+        };
+        Map<String, Id> storeByApp = new Map<String, Id>();
+        for (Loja__c store : [SELECT Id, Codigo__c FROM Loja__c]) {
+            storeByApp.put(store.Codigo__c, store.Id);
+        }
+
+        assertSaleStore(customer.Id, notebook.Id, 'TechLar_Paulista', storeByApp.get('PAULISTA'));
+        assertSaleStore(customer.Id, notebook.Id, 'TechLar_Morumbi', storeByApp.get('MORUMBI'));
+        assertSaleStore(customer.Id, notebook.Id, 'TechLar_Santana', storeByApp.get('SANTANA'));
+        assertSaleStore(customer.Id, notebook.Id, 'TechLar', null);
+        assertSaleStore(customer.Id, notebook.Id, 'TechLar_Operations', null);
     }
 
     @IsTest
@@ -286,6 +310,15 @@ private class TechLarSalesControllerTest {
         System.assertEquals(29.90, rs.valorFrete);
         System.assertEquals(49.90, am.valorFrete);
         System.assertEquals(8, am.prazoDias);
+    }
+
+    private static void assertSaleStore(Id accountId, Id pricebookEntryId, String appName, Id expectedStoreId) {
+        TechLarSalesService.appDeveloperNameOverride = appName;
+        TechLarSalesService.SaleRequest request = newRequest(accountId, 'Retirada na Loja');
+        request.items.add(item(pricebookEntryId, 1));
+        TechLarSalesService.SaleResult result = TechLarSalesController.createSale(request);
+        Order stored = [SELECT Loja__c FROM Order WHERE Id = :result.orderId];
+        System.assertEquals(expectedStoreId, stored.Loja__c, appName);
     }
 
     private static TechLarSalesService.SaleRequest newRequest(Id accountId, String modalidade) {

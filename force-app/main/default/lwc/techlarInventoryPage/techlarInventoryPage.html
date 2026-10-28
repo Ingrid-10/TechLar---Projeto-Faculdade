@@ -20,6 +20,35 @@
             <p class="customer-selected__meta">Estoque desta loja agora: {balanceLabel}</p>
         </div>
 
+        <template if:true={isGeneral}>
+            <lightning-card title="Para esta loja" icon-name="standard:shipment">
+                <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                    <lightning-button
+                        label={openTransfersLabel}
+                        onclick={toggleOpenTransfers}
+                    ></lightning-button>
+                    <template if:true={showOpenTransfers}>
+                        <p if:true={noOpenTransfers} class="empty">Nenhuma transferência em aberto para esta loja.</p>
+                        <ul if:true={hasOpenTransfers} class="result-list">
+                            <template for:each={openTransfers} for:item="item">
+                                <li key={item.transferId}>
+                                    <button
+                                        type="button"
+                                        class={item.rowClass}
+                                        data-id={item.transferId}
+                                        onclick={handleOpenTransfer}
+                                    >
+                                        <strong>{item.transferName}</strong>
+                                        <span>{item.summary}</span>
+                                    </button>
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
+                </div>
+            </lightning-card>
+        </template>
+
         <lightning-card title="Produto" icon-name="standard:product">
             <div class="slds-p-horizontal_medium slds-p-bottom_medium">
                 <div class="search-row">
@@ -96,6 +125,9 @@
                 <lightning-card title="Pedir de outra loja" icon-name="standard:shipment">
                     <div class="slds-p-horizontal_medium slds-p-bottom_medium">
                         <p class="origin-note">Destino: {storeName}</p>
+                        <div if:true={errorMessage} class="slds-alert slds-alert_error slds-m-bottom_small" role="alert">
+                            {errorMessage}
+                        </div>
                         <div class="form-grid">
                             <lightning-combobox
                                 label="Loja de origem"
@@ -130,11 +162,19 @@
                     <p class="decrease">{confirmationDecrease}</p>
                     <p class="customer-selected__meta">{confirmation.message}</p>
                     <p class="customer-selected__meta">Estoque desta loja agora: {balanceLabel}</p>
-                    <div class="footer-actions">
+                    <div class="transfer-path">
+                        <lightning-progress-indicator current-step={confirmation.currentStep} type="path" variant="base">
+                            <lightning-progress-step label="Pedido feito" value="pedido"></lightning-progress-step>
+                            <lightning-progress-step label="Em transporte" value="transporte"></lightning-progress-step>
+                            <lightning-progress-step label="Concluído" value="concluido"></lightning-progress-step>
+                        </lightning-progress-indicator>
+                    </div>
+                    <div if:true={canAdvance} class="footer-actions">
                         <lightning-button
-                            label={otherAppLabel}
+                            label={advanceLabel}
                             variant="brand"
-                            onclick={openOriginApp}
+                            disabled={isSaving}
+                            onclick={handleAdvance}
                         ></lightning-button>
                     </div>
                 </div>

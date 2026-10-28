@@ -1,0 +1,26 @@
+<template>
+    <div class="shell">
+        <header class="banner">
+            <p class="eyebrow">TechLar Operações</p>
+            <h1>Caminho da transferência</h1>
+        </header>
+
+        <p if:true={errorMessage} class="error" role="alert">{errorMessage}</p>
+
+        <template if:true={hasView}>
+            <section class="card">
+                <p class="name">{view.transferName}</p>
+                <h2>{view.productName}</h2>
+                <p>{view.productCode} · {quantityLabel}</p>
+                <p>{view.originName} para {view.destinationName}</p>
+                <lightning-progress-indicator current-step={view.currentStep} type="path" variant="base">
+                    <lightning-progress-step label="Separado" value="separado"></lightning-progress-step>
+                    <lightning-progress-step label="Em trânsito" value="transito"></lightning-progress-step>
+                    <lightning-progress-step label="Recebido" value="recebido"></lightning-progress-step>
+                </lightning-progress-indicator>
+                <p class="note">{view.note}</p>
+                <lightning-button label="Voltar para Operações" onclick={back}></lightning-button>
+            </section>
+        </template>
+    </div>
+</template>

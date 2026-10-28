@@ -1,0 +1,60 @@
+<template>
+    <div class="shell">
+        <header class="banner">
+            <p class="eyebrow">TechLar</p>
+            <h1>Operações</h1>
+            <p>A conversa mostra a situação. A reposição só começa no pedido seguinte.</p>
+        </header>
+
+        <section class="conversation" aria-label="Conversa com o agente">
+            <ul class="messages">
+                <template for:each={messages} for:item="message">
+                    <li key={message.id} class={message.role}>{message.text}</li>
+                </template>
+            </ul>
+            <div class="suggestions">
+                <lightning-button label="Ver estoque das lojas" onclick={askSituation} disabled={busy}></lightning-button>
+                <lightning-button label="Repor as lojas que precisam" onclick={askReplenishment} disabled={busy}></lightning-button>
+            </div>
+            <div class="composer">
+                <lightning-input
+                    label="Mensagem"
+                    value={draft}
+                    onchange={handleDraft}
+                    onkeydown={handleKey}
+                    disabled={busy}
+                ></lightning-input>
+                <lightning-button variant="brand" label="Enviar" onclick={handleSend} disabled={busy}></lightning-button>
+            </div>
+        </section>
+
+        <template if:true={hasBoard}>
+            <section class="board" aria-label="Estoque das lojas">
+                <template for:each={storeCards} for:item="store">
+                    <article key={store.storeCode} class={store.cardClass}>
+                        <h2>{store.storeName}</h2>
+                        <p if:true={store.empty} class="empty">Nenhum dos mais vendidos neste período.</p>
+                        <ul>
+                            <template for:each={store.products} for:item="product">
+                                <li key={product.key} class={product.toneClass}>
+                                    <div>
+                                        <strong>{product.name}</strong>
+                                        <span>{product.code}</span>
+                                    </div>
+                                    <p class="qty">{product.quantityLabel}</p>
+                                    <p>{product.detail}</p>
+                                    <lightning-button
+                                        if:true={product.hasPath}
+                                        label="Ver caminho"
+                                        data-id={product.transferId}
+                                        onclick={openPath}
+                                    ></lightning-button>
+                                </li>
+                            </template>
+                        </ul>
+                    </article>
+                </template>
+            </section>
+        </template>
+    </div>
+</template>

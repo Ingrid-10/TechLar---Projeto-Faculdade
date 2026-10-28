@@ -1,5 +1,12 @@
 public with sharing class TechLarSalesService {
     public static final String CANAL_LOJA_FISICA = 'Loja Física';
+    @TestVisible
+    private static String appDeveloperNameOverride;
+    private static final Map<String, String> STORE_CODE_BY_APP = new Map<String, String>{
+        'TechLar_Paulista' => 'PAULISTA',
+        'TechLar_Morumbi' => 'MORUMBI',
+        'TechLar_Santana' => 'SANTANA'
+    };
     public static final String MODALIDADE_RETIRADA = 'Retirada na Loja';
     public static final String MODALIDADE_ENTREGA = 'Entrega';
 
@@ -283,6 +290,7 @@ public with sharing class TechLarSalesService {
         pedido.Status = 'Draft';
         pedido.Pricebook2Id = entries.values()[0].Pricebook2Id;
         pedido.CanalVenda__c = CANAL_LOJA_FISICA;
+        pedido.Loja__c = storeIdForCurrentApp();
         pedido.ModalidadeRecebimento__c = request.modalidadeRecebimento;
         pedido.ValorFrete__c = freightTotal;
         pedido.PrazoEntregaDias__c = prazo;
@@ -335,6 +343,53 @@ public with sharing class TechLarSalesService {
         result.prazoEntregaDias = prazo;
         result.message = 'Venda ' + pedido.OrderNumber + ' registrada com sucesso.';
         return result;
+    }
+
+    private static Id storeIdForCurrentApp() {
+        String appName = appDeveloperNameOverride;
+        if (String.isBlank(appName)) {
+            appName = currentAppDeveloperName();
+        }
+        String storeCode = STORE_CODE_BY_APP.get(appName);
+        if (String.isBlank(storeCode)) {
+            return null;
+        }
+        List<Loja__c> stores = [SELECT Id FROM Loja__c WHERE Codigo__c = :storeCode LIMIT 1];
+        return stores.isEmpty() ? null : stores[0].Id;
+    }
+
+    private static String currentAppDeveloperName() {
+        try {
+            List<UserAppInfo> infos = [
+                SELECT AppDefinitionId, FormFactor
+                FROM UserAppInfo
+                WHERE UserId = :UserInfo.getUserId()
+                ORDER BY CreatedDate DESC
+                LIMIT 5
+            ];
+            String appDefinitionId;
+            for (UserAppInfo info : infos) {
+                if (info.FormFactor == 'Large') {
+                    appDefinitionId = info.AppDefinitionId;
+                    break;
+                }
+            }
+            if (String.isBlank(appDefinitionId) && !infos.isEmpty()) {
+                appDefinitionId = infos[0].AppDefinitionId;
+            }
+            if (String.isBlank(appDefinitionId)) {
+                return null;
+            }
+            List<AppDefinition> apps = [
+                SELECT DeveloperName
+                FROM AppDefinition
+                WHERE DurableId = :appDefinitionId
+                LIMIT 1
+            ];
+            return apps.isEmpty() ? null : apps[0].DeveloperName;
+        } catch (Exception ex) {
+            return null;
+        }
     }
 
     private static void validateSale(SaleRequest request) {

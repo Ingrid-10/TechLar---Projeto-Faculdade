@@ -1,0 +1,79 @@
+system:
+    instructions: |
+        Você é o agente de operações da TechLar.
+        No primeiro pedido, só analise os três mais vendidos de cada loja e o estoque. Não transfira.
+        Só reponha quando a pessoa pedir explicitamente para repor as lojas que precisam.
+        A origem é sempre o Estoque Central. Abaixo de 5, reponha até 10. Sem transferência parcial e sem Cases.
+        Responda com o texto da ação, inclusive o link do caminho quando houver transferência.
+    messages:
+        welcome: "Posso verificar os mais vendidos e o estoque das lojas. A reposição só acontece quando você pedir."
+        error: "Não consegui concluir este pedido. Tente de novo."
+
+# Usuário inexistente: esta versão da CLI exige o campo no preview.
+# O agente de funcionário continua rodando como a pessoa logada.
+access:
+    default_agent_user: "preview-bypass@techlar.invalid"
+
+config:
+    developer_name: "TechLar_Operations_Employee_Agent"
+    agent_label: "TechLar Operations Employee Agent"
+    description: "Analisa o estoque das lojas e só repõe quando a pessoa pede."
+    agent_type: "AgentforceEmployeeAgent"
+
+language:
+    default_locale: "pt_BR"
+    additional_locales: ""
+    all_additional_locales: False
+
+start_agent main:
+    label: "Operações"
+    description: "Conversa em dois pedidos: primeiro a situação, depois a reposição"
+
+    actions:
+        analyze_stock:
+            description: "Mostra os mais vendidos e o estoque das lojas, sem transferir."
+            label: "Analisar estoque das lojas TechLar"
+            target: "apex://TechLarStockAnalysisService"
+            inputs:
+                instruction: string
+                    description: "Pedido do funcionário"
+                    label: "Pedido do funcionário"
+                    is_required: False
+            outputs:
+                summary: string
+                    label: "Resumo da situação"
+                    description: "Situação das lojas, sem transferência"
+                    is_displayable: True
+                    filter_from_agent: False
+        replenish_stock:
+            description: "Repõe a partir do Estoque Central o que estiver abaixo de 5 unidades até 10."
+            label: "Repor estoque das lojas TechLar"
+            target: "apex://TechLarReplenishmentService"
+            inputs:
+                instruction: string
+                    description: "Pedido do funcionário"
+                    label: "Pedido do funcionário"
+                    is_required: False
+            outputs:
+                summary: string
+                    label: "Resumo da reposição"
+                    description: "O que foi transferido, o que foi recusado e o link do caminho"
+                    is_displayable: True
+                    filter_from_agent: False
+
+    reasoning:
+        instructions: ->
+            | Se a pessoa pedir para verificar, analisar ou ver o estoque e os mais vendidos, chame somente a análise.
+              Se a pessoa pedir para repor, transferir ou reabastecer, chame somente a reposição.
+              Use uma ação por pedido.
+              Responda em português com o texto devolvido pela ação, inclusive o link do caminho.
+              Não abra Cases e não prometa transferência parcial.
+              Se o pedido for outro, diga que você verifica o estoque das lojas e repõe quando pedirem.
+
+        actions:
+            analyze_stock: @actions.analyze_stock
+                description: "Analisa a situação sem transferir"
+                with instruction = ...
+            replenish_stock: @actions.replenish_stock
+                description: "Executa a reposição pedida"
+                with instruction = ...

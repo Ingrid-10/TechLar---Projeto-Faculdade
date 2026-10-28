@@ -16,12 +16,28 @@
         <application>TechLar_Santana</application>
         <visible>true</visible>
     </applicationVisibilities>
+    <applicationVisibilities>
+        <application>TechLar_Operations</application>
+        <visible>true</visible>
+    </applicationVisibilities>
     <classAccesses>
         <apexClass>TechLarInventoryController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>TechLarInventoryService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TechLarReplenishmentService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TechLarStockAnalysisService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TechLarOperationsController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -33,6 +49,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <description>Acesso à Central de Estoque TechLar (Sprint 3).</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Estoque__c.Produto__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Movimentacao_Estoque__c.Data_Movimentacao__c</field>
@@ -105,6 +126,14 @@
         <object>Transferencia_Estoque__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <tabSettings>
+        <tab>TechLar_Operacoes</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>TechLar_Caminho_Transferencia</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
     <tabSettings>
         <tab>TechLar_Atendimento</tab>
         <visibility>Visible</visibility>

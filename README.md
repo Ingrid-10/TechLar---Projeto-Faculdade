@@ -1,6 +1,6 @@
 # TechLar 360
 
-Plataforma Salesforce da TechLar para centralizar vendas em loja física, atendimento, estoque entre lojas e inteligência artificial. Desenvolvida em 4 sprints para o projeto final de Análise e Desenvolvimento de Sistemas.
+Plataforma Salesforce da TechLar para centralizar vendas em loja física, atendimento, estoque entre lojas e a reposição por um Employee Agent. Desenvolvida em 4 sprints para o projeto final de Análise e Desenvolvimento de Sistemas.
 
 ## Sprint 1 — Venda Assistida em Loja Física (AC1 — 14/09)
 
@@ -65,6 +65,16 @@ sf org open --target-org techlar --path /lightning/n/TechLar_Estoque
 ```
 
 Abra a aba **Estoque**.
+
+## Sprint 4 — Employee Agent para Reposição Inteligente (entrega final — 22/11)
+
+Planejamento do agente interno no aplicativo TechLar Operações. Ele olha os três produtos mais vendidos de cada loja nos últimos 30 dias e pede ao Estoque Central a reposição do que estiver abaixo de 5 unidades, até o alvo de 10. A transferência reutiliza a Sprint 3. A loja da venda é a do aplicativo aberto, sem seleção na tela.
+
+Documentação: [docs/sprint-4.md](docs/sprint-4.md)
+
+Board: [mesmo Project](https://github.com/users/Ingrid-10/projects/1) (view **Sprint 4**)
+
+Status: planejamento. O agente ainda não está na org.
 
 ## Stack
 

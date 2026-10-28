@@ -108,6 +108,11 @@ h1 {
     border-color: #1d4e89;
 }
 
+.result-btn_selected {
+    border-color: #c8890a;
+    background: #fff8e8;
+}
+
 .product-name {
     margin: 0;
     font-weight: 700;
@@ -131,6 +136,13 @@ h1 {
     border-radius: 0.5rem;
     background: #e8f3ec;
     border: 2px solid #2e844a;
+}
+
+.transfer-path {
+    margin: 0.85rem 0 0.35rem;
+    padding: 0.65rem 0.35rem 0.15rem;
+    border-radius: 0.35rem;
+    background: #fff;
 }
 
 .customer-selected__badge {

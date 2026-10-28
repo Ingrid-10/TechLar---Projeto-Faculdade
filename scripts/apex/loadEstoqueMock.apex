@@ -33,18 +33,19 @@ System.assert(
 upsert new List<Loja__c>{
     new Loja__c(Name = 'TechLar Paulista', Codigo__c = 'PAULISTA', Cidade__c = 'São Paulo', Status__c = 'Ativa'),
     new Loja__c(Name = 'TechLar Morumbi', Codigo__c = 'MORUMBI', Cidade__c = 'São Paulo', Status__c = 'Ativa'),
-    new Loja__c(Name = 'TechLar Santana', Codigo__c = 'SANTANA', Cidade__c = 'São Paulo', Status__c = 'Ativa')
+    new Loja__c(Name = 'TechLar Santana', Codigo__c = 'SANTANA', Cidade__c = 'São Paulo', Status__c = 'Ativa'),
+    new Loja__c(Name = 'TechLar Estoque Central', Codigo__c = 'CENTRAL', Cidade__c = 'São Paulo', Status__c = 'Ativa')
 } Codigo__c;
 
 Map<String, Id> lojaIdByCode = new Map<String, Id>();
-for (Loja__c loja : [SELECT Id, Codigo__c FROM Loja__c WHERE Codigo__c IN ('PAULISTA', 'MORUMBI', 'SANTANA')]) {
+for (Loja__c loja : [SELECT Id, Codigo__c FROM Loja__c WHERE Codigo__c IN ('PAULISTA', 'MORUMBI', 'SANTANA', 'CENTRAL')]) {
     lojaIdByCode.put(loja.Codigo__c, loja.Id);
 }
 
 List<List<String>> rows = new List<List<String>>{
     new List<String>{ 'TL-NB-001', 'PAULISTA', '15' },
     new List<String>{ 'TL-NB-001', 'MORUMBI', '2' },
-    new List<String>{ 'TL-NB-001', 'SANTANA', '6' },
+    new List<String>{ 'TL-NB-001', 'SANTANA', '4' },
     new List<String>{ 'TL-MS-001', 'PAULISTA', '20' },
     new List<String>{ 'TL-MS-001', 'MORUMBI', '8' },
     new List<String>{ 'TL-MS-001', 'SANTANA', '12' },
@@ -53,7 +54,11 @@ List<List<String>> rows = new List<List<String>>{
     new List<String>{ 'TL-MN-001', 'SANTANA', '3' },
     new List<String>{ 'TL-KB-001', 'PAULISTA', '9' },
     new List<String>{ 'TL-KB-001', 'MORUMBI', '9' },
-    new List<String>{ 'TL-KB-001', 'SANTANA', '7' }
+    new List<String>{ 'TL-KB-001', 'SANTANA', '7' },
+    new List<String>{ 'TL-NB-001', 'CENTRAL', '100' },
+    new List<String>{ 'TL-MS-001', 'CENTRAL', '50' },
+    new List<String>{ 'TL-MN-001', 'CENTRAL', '50' },
+    new List<String>{ 'TL-KB-001', 'CENTRAL', '50' }
 };
 
 List<Estoque__c> estoques = new List<Estoque__c>();

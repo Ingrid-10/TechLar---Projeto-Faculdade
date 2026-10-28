@@ -21,3 +21,6 @@ coverage/
 # Generated / media
 **/jsconfig.json
 Videos/
+
+# Entrega da AC3 fica só na máquina local
+docs/AC3-Sprint-3-Entrega-Classroom.docx
