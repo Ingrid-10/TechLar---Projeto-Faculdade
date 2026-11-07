@@ -1,7 +1,7 @@
 import { LightningElement } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import checkStores from '@salesforce/apex/TechLarOperationsController.checkStores';
-import replenishStores from '@salesforce/apex/TechLarOperationsController.replenishStores';
+import sendAgentMessage from '@salesforce/apex/TechLarAgentController.sendMessage';
 
 const WELCOME = 'Posso verificar os mais vendidos e o estoque das lojas. A reposição só acontece quando você pedir.';
 
@@ -9,6 +9,8 @@ export default class TechlarOperationsPage extends NavigationMixin(LightningElem
     draft = '';
     busy = false;
     board;
+    sessionId;
+    recentTransfers = [];
     messages = [{ id: 'welcome', role: 'agent', text: WELCOME }];
 
     get hasBoard() {
@@ -53,24 +55,21 @@ export default class TechlarOperationsPage extends NavigationMixin(LightningElem
         }
         this.draft = '';
         this.messages = [...this.messages, { id: this.nextId(), role: 'user', text }];
-        const normalized = text.toLowerCase();
-        if (/repon|reposi|transfer/.test(normalized)) {
-            await this.run(replenishStores);
-            return;
-        }
-        if (/verif|estoque|vendid|loja|analis|situa/.test(normalized)) {
-            await this.run(checkStores);
-            return;
-        }
-        this.reply('Eu verifico os mais vendidos e o estoque das lojas, e reponho o que estiver abaixo de 5 quando você pedir.');
+        await this.runAgent(text);
     }
 
-    async run(action) {
+    async runAgent(text) {
         this.busy = true;
         try {
-            const board = await action();
+            const response = await sendAgentMessage({
+                userMessage: text,
+                sessionId: this.sessionId
+            });
+            this.sessionId = response.sessionId;
+            this.recentTransfers = response.transfers || [];
+            this.reply(response.message);
+            const board = await checkStores();
             this.board = this.decorate(board);
-            this.reply(board.message);
         } catch (error) {
             this.reply(this.errorText(error));
         } finally {
@@ -79,13 +78,20 @@ export default class TechlarOperationsPage extends NavigationMixin(LightningElem
     }
 
     decorate(board) {
+        const transferByProduct = new Map(
+            this.recentTransfers.map((transfer) => [
+                `${transfer.destinationCode}-${transfer.productCode}`,
+                transfer.transferId
+            ])
+        );
         const stores = (board.stores || []).map((store) => ({
             ...store,
             products: (store.products || []).map((product) => ({
                 ...product,
                 toneClass: `product product_${product.tone || 'ok'}`,
                 quantityLabel: this.quantityLabel(product),
-                hasPath: Boolean(product.transferId)
+                transferId: product.transferId || transferByProduct.get(product.key),
+                hasPath: Boolean(product.transferId || transferByProduct.get(product.key))
             }))
         }));
         return { ...board, stores };

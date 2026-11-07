@@ -50,7 +50,11 @@ private class TechLarReplenishmentServiceTest {
         System.assertEquals(15, balance('TL-NB-001', 'PAULISTA'));
         System.assertEquals(10, balance('TL-NB-001', 'MORUMBI'));
         System.assertEquals(10, balance('TL-NB-001', 'SANTANA'));
-        System.assert(summary.message.contains('Total de transferências realizadas: 2'));
+        System.assert(summary.message.contains('TechLar Morumbi: 8 unidades de Notebook TechLar X (de 2 para 10)'));
+        System.assert(summary.message.contains('TechLar Santana: 6 unidades de Notebook TechLar X (de 4 para 10)'));
+        System.assert(summary.message.contains('As demais lojas e produtos avaliados já possuíam o estoque mínimo.'));
+        System.assert(!summary.message.contains('Nenhuma transferência.'));
+        System.assert(!summary.message.contains('Caminho da transferência:'));
         System.assertEquals(2, [SELECT COUNT() FROM Transferencia_Estoque__c]);
         System.assertEquals(4, [SELECT COUNT() FROM Movimentacao_Estoque__c]);
     }
@@ -86,6 +90,8 @@ private class TechLarReplenishmentServiceTest {
         System.assertEquals(0, summary.transferCount);
         System.assertEquals(5, balance('TL-NB-001', 'PAULISTA'));
         System.assertEquals(100, balance('TL-NB-001', 'CENTRAL'));
+        System.assert(summary.message.contains('Nenhuma reposição foi necessária.'));
+        System.assert(summary.message.contains('já possuíam o estoque mínimo.'));
     }
 
     @IsTest

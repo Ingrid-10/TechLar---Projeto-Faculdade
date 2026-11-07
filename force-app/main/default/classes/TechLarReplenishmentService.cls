@@ -244,25 +244,44 @@ public with sharing class TechLarReplenishmentService {
 
     private static String buildReplenishmentMessage(Summary summary) {
         List<String> parts = new List<String>();
-        parts.add('Reposição concluída.');
         if (summary.lines.isEmpty()) {
-            parts.add('Nenhum produto vendido nos últimos 30 dias.');
+            return 'Nenhum produto vendido nos últimos 30 dias.';
         }
+
+        List<String> transferred = new List<String>();
+        List<String> notReplenished = new List<String>();
+        Boolean hasSufficientStock = false;
         for (Line line : summary.lines) {
             if (line.outcome == 'Transferida') {
                 summary.transferCount++;
-                parts.add(
-                    line.storeName + ': ' + line.productName + ' de ' + line.beforeQuantity.intValue()
-                    + ' para ' + line.afterQuantity.intValue() + '. Transferidas: ' + line.transferredQuantity.intValue() + '.'
+                transferred.add(
+                    '- ' + line.storeName + ': ' + line.transferredQuantity.intValue() + ' unidades de '
+                    + line.productName + ' (de ' + line.beforeQuantity.intValue()
+                    + ' para ' + line.afterQuantity.intValue() + ').'
                 );
-                parts.add('Caminho da transferência: ' + line.pathUrl);
             } else if (line.outcome == 'Sem necessidade') {
-                parts.add(line.storeName + ': ' + line.productName + ' com ' + line.beforeQuantity.intValue() + ' unidades. Nenhuma transferência.');
+                hasSufficientStock = true;
             } else {
-                parts.add(line.storeName + ': ' + line.productName + ' não foi reposto. Motivo: ' + line.outcome + '. ' + line.detail);
+                notReplenished.add(
+                    '- ' + line.storeName + ': ' + line.productName + ' não foi reposto. '
+                    + line.outcome + ': ' + line.detail
+                );
             }
         }
-        parts.add('Total de transferências realizadas: ' + summary.transferCount + '.');
+
+        if (summary.transferCount == 0) {
+            parts.add('Nenhuma reposição foi necessária.');
+        } else {
+            parts.add('Reposição concluída nas lojas que estavam abaixo do mínimo:');
+            parts.addAll(transferred);
+        }
+        if (hasSufficientStock) {
+            parts.add('As demais lojas e produtos avaliados já possuíam o estoque mínimo.');
+        }
+        if (!notReplenished.isEmpty()) {
+            parts.add('Itens que não puderam ser repostos:');
+            parts.addAll(notReplenished);
+        }
         return String.join(parts, '\n');
     }
 

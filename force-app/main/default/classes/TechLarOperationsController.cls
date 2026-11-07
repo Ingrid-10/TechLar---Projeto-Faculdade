@@ -178,7 +178,7 @@ public with sharing class TechLarOperationsController {
         view.originName = transferRecord.Loja_Origem__r.Name;
         view.destinationName = transferRecord.Loja_Destino__r.Name;
         view.currentStep = received ? 'recebido' : (separated ? 'transito' : 'separado');
-        view.note = 'A saída do central e a entrada na loja ficam registradas juntas. O caminho mostra essa movimentação, sem espera nem rastreio.';
+        view.note = 'O caminho mostra essa movimentação, sem espera nem rastreio.';
         return view;
     }
 
