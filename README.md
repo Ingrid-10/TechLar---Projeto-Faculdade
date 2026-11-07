@@ -72,9 +72,11 @@ Planejamento do agente interno no aplicativo TechLar Operações. Ele olha os tr
 
 Documentação: [docs/sprint-4.md](docs/sprint-4.md)
 
+Diagramas UML: [docs/diagramas-ac4.md](docs/diagramas-ac4.md)
+
 Board: [mesmo Project](https://github.com/users/Ingrid-10/projects/1) (view **Sprint 4**)
 
-Status: planejamento. O agente ainda não está na org.
+Status: implementado na org. O Employee Agent recebe pedidos em linguagem natural, escolhe a action de análise ou reposição e apresenta o resultado no aplicativo TechLar Operações.
 
 ## Stack
 

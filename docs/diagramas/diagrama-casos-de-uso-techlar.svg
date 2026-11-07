@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1780" height="1440" viewBox="0 0 1780 1440" role="img" aria-labelledby="title desc">
+<title id="title">TechLar — Diagrama de casos de uso</title>
+<desc id="desc">Diagrama UML do projeto TechLar baseado nos metadados e classes implementados.</desc>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#667085"/></marker>
+</defs>
+<rect width="1780" height="1440" fill="#FFFFFF"/>
+<text x="40" y="48" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#172033">TechLar — Diagrama de casos de uso</text>
+<line x1="40" y1="66" x2="1740" y2="66" stroke="#EDB119" stroke-width="4"/>
+<polyline points="125,257 465,194" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="125,257 780,179" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="125,257 1075,179" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="125,257 795,284" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="125,257 630,374" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="630,374 465,194" fill="none" stroke="#667085" stroke-width="1.5" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+<rect x="516" y="272" width="62" height="20" rx="4" fill="#FFFFFF"/>
+<text x="547" y="287" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#44546A">«include»</text>
+<polyline points="630,374 1075,179" fill="none" stroke="#667085" stroke-width="1.5" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+<rect x="821" y="264" width="62" height="20" rx="4" fill="#FFFFFF"/>
+<text x="852" y="279" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#44546A">«include»</text>
+<polyline points="795,284 1160,284" fill="none" stroke="#667085" stroke-width="1.5" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+<rect x="929" y="272" width="96" height="20" rx="4" fill="#FFFFFF"/>
+<text x="977" y="287" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#44546A">«extend» entrega</text>
+<polyline points="1645,307 1160,284" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="125,577 445,509" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="125,577 780,509" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="125,577 1140,509" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="125,577 805,614" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="1140,509 780,509" fill="none" stroke="#667085" stroke-width="1.5" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+<rect x="929" y="497" width="62" height="20" rx="4" fill="#FFFFFF"/>
+<text x="960" y="512" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#44546A">«include»</text>
+<polyline points="125,897 475,759" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="125,897 835,759" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="125,897 1205,759" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="125,897 580,869" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="125,897 995,869" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="125,897 795,979" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="1205,759 835,759" fill="none" stroke="#667085" stroke-width="1.5" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+<rect x="989" y="747" width="62" height="20" rx="4" fill="#FFFFFF"/>
+<text x="1020" y="762" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#44546A">«include»</text>
+<polyline points="795,979 1235,1279" fill="none" stroke="#667085" stroke-width="1.5" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+<rect x="984" y="1117" width="62" height="20" rx="4" fill="#FFFFFF"/>
+<text x="1015" y="1132" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#44546A">«include»</text>
+<polyline points="125,1240 500,1114" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="125,1240 920,1084" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="125,1240 905,1194" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="1645,1202 500,1114" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="1645,1202 920,1084" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="1645,1202 905,1194" fill="none" stroke="#667085" stroke-width="1.5"/>
+<polyline points="1285,1144 905,1194" fill="none" stroke="#667085" stroke-width="1.5" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+<rect x="1024" y="1157" width="142" height="20" rx="4" fill="#FFFFFF"/>
+<text x="1095" y="1172" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#44546A">«extend» se elegível</text>
+<polyline points="1285,1144 1235,1279" fill="none" stroke="#667085" stroke-width="1.5" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+<rect x="1229" y="1199" width="62" height="20" rx="4" fill="#FFFFFF"/>
+<text x="1260" y="1214" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#44546A">«include»</text>
+<polyline points="905,1194 920,1084" fill="none" stroke="#667085" stroke-width="1.5" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+<rect x="881" y="1127" width="62" height="20" rx="4" fill="#FFFFFF"/>
+<text x="912" y="1142" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#44546A">«include»</text>
+<polyline points="125,1240 995,869" fill="none" stroke="#667085" stroke-width="1.5"/>
+<rect x="260" y="85" width="1240" height="1300" rx="14" fill="#F5F6F8" fill-opacity="0.45" stroke="#44546A" stroke-width="1.5" stroke-dasharray="8 6"/>
+<text x="274" y="109" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#172033">Sistema TechLar no Salesforce</text>
+<circle cx="125" cy="203" r="15" fill="#FFF7E6" stroke="#9A5D00" stroke-width="2"/>
+<line x1="125" y1="218" x2="125" y2="263" stroke="#9A5D00" stroke-width="2"/>
+<line x1="97" y1="235" x2="153" y2="235" stroke="#9A5D00" stroke-width="2"/>
+<line x1="125" y1="263" x2="100" y2="293" stroke="#9A5D00" stroke-width="2"/>
+<line x1="125" y1="263" x2="150" y2="293" stroke="#9A5D00" stroke-width="2"/>
+<text x="125" y="331" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#172033">Vendedor</text>
+<circle cx="125" cy="523" r="15" fill="#F2ECFF" stroke="#6345A5" stroke-width="2"/>
+<line x1="125" y1="538" x2="125" y2="583" stroke="#6345A5" stroke-width="2"/>
+<line x1="97" y1="555" x2="153" y2="555" stroke="#6345A5" stroke-width="2"/>
+<line x1="125" y1="583" x2="100" y2="613" stroke="#6345A5" stroke-width="2"/>
+<line x1="125" y1="583" x2="150" y2="613" stroke="#6345A5" stroke-width="2"/>
+<text x="125" y="651" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#172033">Atendente</text>
+<circle cx="125" cy="843" r="15" fill="#E8F2FF" stroke="#1B5FAA" stroke-width="2"/>
+<line x1="125" y1="858" x2="125" y2="903" stroke="#1B5FAA" stroke-width="2"/>
+<line x1="97" y1="875" x2="153" y2="875" stroke="#1B5FAA" stroke-width="2"/>
+<line x1="125" y1="903" x2="100" y2="933" stroke="#1B5FAA" stroke-width="2"/>
+<line x1="125" y1="903" x2="150" y2="933" stroke="#1B5FAA" stroke-width="2"/>
+<text x="125" y="971" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#172033">Estoquista</text>
+<circle cx="125" cy="1183" r="15" fill="#E8F7EF" stroke="#26734D" stroke-width="2"/>
+<line x1="125" y1="1198" x2="125" y2="1243" stroke="#26734D" stroke-width="2"/>
+<line x1="97" y1="1215" x2="153" y2="1215" stroke="#26734D" stroke-width="2"/>
+<line x1="125" y1="1243" x2="100" y2="1273" stroke="#26734D" stroke-width="2"/>
+<line x1="125" y1="1243" x2="150" y2="1273" stroke="#26734D" stroke-width="2"/>
+<text x="125" y="1316" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#172033">Funcionário de Operações</text>
+<circle cx="1645" cy="253" r="15" fill="#E8F7EF" stroke="#26734D" stroke-width="2"/>
+<line x1="1645" y1="268" x2="1645" y2="313" stroke="#26734D" stroke-width="2"/>
+<line x1="1617" y1="285" x2="1673" y2="285" stroke="#26734D" stroke-width="2"/>
+<line x1="1645" y1="313" x2="1620" y2="343" stroke="#26734D" stroke-width="2"/>
+<line x1="1645" y1="313" x2="1670" y2="343" stroke="#26734D" stroke-width="2"/>
+<text x="1645" y="381" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#172033">ViaCEP</text>
+<circle cx="1645" cy="1143" r="15" fill="#FFF7E6" stroke="#9A5D00" stroke-width="2"/>
+<line x1="1645" y1="1158" x2="1645" y2="1203" stroke="#9A5D00" stroke-width="2"/>
+<line x1="1617" y1="1175" x2="1673" y2="1175" stroke="#9A5D00" stroke-width="2"/>
+<line x1="1645" y1="1203" x2="1620" y2="1233" stroke="#9A5D00" stroke-width="2"/>
+<line x1="1645" y1="1203" x2="1670" y2="1233" stroke="#9A5D00" stroke-width="2"/>
+<text x="1645" y="1281" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#172033">Agentforce</text>
+<ellipse cx="465.0" cy="194.0" rx="135.0" ry="34.0" fill="#FFF7E6" stroke="#9A5D00" stroke-width="1.6"/>
+<text x="465.0" y="190.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Localizar ou</text>
+<text x="465.0" y="208.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">cadastrar cliente</text>
+<ellipse cx="780.0" cy="179.0" rx="120.0" ry="34.0" fill="#FFF7E6" stroke="#9A5D00" stroke-width="1.6"/>
+<text x="780.0" y="184.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Pesquisar produtos</text>
+<ellipse cx="1075.0" cy="179.0" rx="115.0" ry="34.0" fill="#FFF7E6" stroke="#9A5D00" stroke-width="1.6"/>
+<text x="1075.0" y="184.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Montar carrinho</text>
+<ellipse cx="795.0" cy="284.0" rx="135.0" ry="34.0" fill="#FFF7E6" stroke="#9A5D00" stroke-width="1.6"/>
+<text x="795.0" y="289.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Escolher retirada ou entrega</text>
+<ellipse cx="1160.0" cy="284.0" rx="150.0" ry="34.0" fill="#FFF7E6" stroke="#9A5D00" stroke-width="1.6"/>
+<text x="1160.0" y="280.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Consultar CEP</text>
+<text x="1160.0" y="298.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">e calcular frete</text>
+<ellipse cx="630.0" cy="374.0" rx="150.0" ry="34.0" fill="#FFF7E6" stroke="#9A5D00" stroke-width="1.6"/>
+<text x="630.0" y="370.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Concluir venda</text>
+<text x="630.0" y="388.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">e gerar pedido</text>
+<ellipse cx="445.0" cy="509.0" rx="115.0" ry="34.0" fill="#F2ECFF" stroke="#6345A5" stroke-width="1.6"/>
+<text x="445.0" y="514.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Localizar cliente</text>
+<ellipse cx="780.0" cy="509.0" rx="130.0" ry="34.0" fill="#F2ECFF" stroke="#6345A5" stroke-width="1.6"/>
+<text x="780.0" y="514.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Consultar pedidos e itens</text>
+<ellipse cx="1140.0" cy="509.0" rx="150.0" ry="34.0" fill="#F2ECFF" stroke="#6345A5" stroke-width="1.6"/>
+<text x="1140.0" y="514.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Abrir atendimento pós-venda</text>
+<ellipse cx="805.0" cy="614.0" rx="155.0" ry="34.0" fill="#F2ECFF" stroke="#6345A5" stroke-width="1.6"/>
+<text x="805.0" y="610.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Consultar ou</text>
+<text x="805.0" y="628.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">encerrar atendimento</text>
+<ellipse cx="475.0" cy="759.0" rx="145.0" ry="34.0" fill="#E8F2FF" stroke="#1B5FAA" stroke-width="1.6"/>
+<text x="475.0" y="764.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Pesquisar produto no estoque</text>
+<ellipse cx="835.0" cy="759.0" rx="135.0" ry="34.0" fill="#E8F2FF" stroke="#1B5FAA" stroke-width="1.6"/>
+<text x="835.0" y="764.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Consultar saldos por loja</text>
+<ellipse cx="1205.0" cy="759.0" rx="165.0" ry="34.0" fill="#E8F2FF" stroke="#1B5FAA" stroke-width="1.6"/>
+<text x="1205.0" y="755.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Pedir transferência</text>
+<text x="1205.0" y="773.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">de outra loja</text>
+<ellipse cx="580.0" cy="869.0" rx="160.0" ry="34.0" fill="#E8F2FF" stroke="#1B5FAA" stroke-width="1.6"/>
+<text x="580.0" y="865.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Consultar</text>
+<text x="580.0" y="883.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">transferências abertas</text>
+<ellipse cx="995.0" cy="869.0" rx="175.0" ry="34.0" fill="#E8F2FF" stroke="#1B5FAA" stroke-width="1.6"/>
+<text x="995.0" y="865.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Acompanhar caminho</text>
+<text x="995.0" y="883.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">da transferência</text>
+<ellipse cx="795.0" cy="979.0" rx="195.0" ry="34.0" fill="#E8F2FF" stroke="#1B5FAA" stroke-width="1.6"/>
+<text x="795.0" y="975.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Avançar transporte</text>
+<text x="795.0" y="993.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">e confirmar entrada</text>
+<ellipse cx="500.0" cy="1114.0" rx="170.0" ry="34.0" fill="#E8F7EF" stroke="#26734D" stroke-width="1.6"/>
+<text x="500.0" y="1110.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Enviar pedido</text>
+<text x="500.0" y="1128.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">em linguagem natural</text>
+<ellipse cx="920.0" cy="1084.0" rx="170.0" ry="34.0" fill="#E8F7EF" stroke="#26734D" stroke-width="1.6"/>
+<text x="920.0" y="1080.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Analisar Top 3</text>
+<text x="920.0" y="1098.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">e estoque por loja</text>
+<ellipse cx="905.0" cy="1194.0" rx="155.0" ry="34.0" fill="#E8F7EF" stroke="#26734D" stroke-width="1.6"/>
+<text x="905.0" y="1190.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Solicitar reposição</text>
+<text x="905.0" y="1208.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">das lojas</text>
+<ellipse cx="1285.0" cy="1144.0" rx="165.0" ry="39.0" fill="#E8F7EF" stroke="#26734D" stroke-width="1.6"/>
+<text x="1285.0" y="1140.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Executar transferências</text>
+<text x="1285.0" y="1158.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">válidas do central</text>
+<ellipse cx="1235.0" cy="1279.0" rx="195.0" ry="39.0" fill="#E8F7EF" stroke="#26734D" stroke-width="1.6"/>
+<text x="1235.0" y="1275.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">Atualizar saldos</text>
+<text x="1235.0" y="1293.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#172033">e registrar movimentações</text>
+</svg>

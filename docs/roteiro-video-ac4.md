@@ -15,9 +15,10 @@ Deixe estas abas abertas, nesta ordem:
 
 1. **Board:** [Sprint 4](https://github.com/users/Ingrid-10/projects/1/views/10) — cards em **Done**.
 2. **Código:** [repositório](https://github.com/Ingrid-10/TechLar---Projeto-Faculdade) — `force-app/main/default` à vista.
-3. **Agentforce:** Employee Agent **TechLar Operations Employee Agent**.
-4. **Org:** aplicativo **TechLar Operações** → aba **Operações**, antes de qualquer mensagem.
-5. **Dados:** uma aba pronta para abrir transferências e movimentações pelo número `TRF`.
+3. **Diagramas:** `docs/diagramas-ac4.md` aberto no GitHub.
+4. **Agentforce:** Employee Agent **TechLar Operations Employee Agent**.
+5. **Org:** aplicativo **TechLar Operações** → aba **Operações**, antes de qualquer mensagem.
+6. **Dados:** uma aba pronta para abrir transferências e movimentações pelo número `TRF`.
 
 Confirme os dados iniciais antes da gravação:
 
@@ -75,7 +76,7 @@ O texto em *itálico* é fala. O **negrito** é ação na tela.
 
 *O board está concluído. As demandas cobrem o Estoque Central, a identificação da loja da venda, os dados dos últimos 30 dias, o serviço de reposição, o aplicativo de Operações e o Employee Agent.*
 
-### 3. GitHub — 0:35 a 1:00
+### 3. GitHub — 0:35 a 0:55
 
 **Abra `force-app/main/default`. Mostre rapidamente as pastas `aiAuthoringBundles`, `lwc`, `classes` e `objects`, sem abrir código.**
 
@@ -85,13 +86,19 @@ O texto em *itálico* é fala. O **negrito** é ação na tela.
 
 *Os dados são fictícios e incluem vendas recentes por loja e os saldos usados nesta demonstração.*
 
-### 4. Employee Agent — 1:00 a 1:20
+### 4. Diagramas UML — 0:55 a 1:20
+
+**Abra `docs/diagramas-ac4.md`. Mostre primeiro o diagrama de classes e depois o diagrama de casos de uso, sem ampliar cada detalhe.**
+
+*O diagrama de classes documenta clientes, pedidos, produtos, lojas, estoques, transferências, movimentações e atendimentos. O diagrama de casos de uso mostra os fluxos do vendedor, do atendente, do estoquista e do funcionário de Operações com o Agentforce.*
+
+### 5. Employee Agent — 1:20 a 1:35
 
 **Na configuração do Agentforce, mostre o agente `TechLar Operations Employee Agent` e as actions de análise e reposição. Não publique nem altere configurações durante a gravação.**
 
 *Este é o Employee Agent de Operações. Ele possui uma action para analisar sem alterar o estoque e outra para executar a reposição. A conversa usa um pedido por vez: primeiro verificar e depois repor.*
 
-### 5. Análise sem transferência — 1:20 a 2:05
+### 6. Análise sem transferência — 1:35 a 2:10
 
 **Volte ao aplicativo `TechLar Operações`, aba `Operações`. Digite ou use a sugestão: `Verifique os produtos mais vendidos e o estoque das lojas.`**
 
@@ -101,7 +108,7 @@ O texto em *itálico* é fala. O **negrito** é ação na tela.
 
 *O Notebook TechLar X possui 100 unidades no central. A Paulista tem 15 e não precisa de reposição. O Morumbi tem 2 e precisa de 8. Santana tem 4 e precisa de 6. Como a análise é somente leitura, os saldos ainda não mudaram.*
 
-### 6. Reposição inteligente — 2:05 a 2:45
+### 7. Reposição inteligente — 2:10 a 2:40
 
 **Digite ou use a sugestão: `Reponha as lojas que precisam.`**
 
@@ -111,17 +118,17 @@ O texto em *itálico* é fala. O **negrito** é ação na tela.
 
 *Foram realizadas duas transferências: 8 unidades para o Morumbi e 6 para Santana. A Paulista permaneceu com 15. O central passou de 100 para 86, e as duas lojas chegaram a 10 unidades.*
 
-### 7. Caminho e banco — 2:45 a 3:30
+### 8. Caminho e banco — 2:40 a 3:25
 
 **Em uma transferência, clique em `Ver caminho`.**
 
-*Cada reposição entrega um caminho visual. Esta transferência saiu do Estoque Central, passou por Separado e Em trânsito e aparece como Recebido porque a saída e a entrada já foram registradas.*
+*Cada reposição entrega um caminho visual com as etapas Separado, Em trânsito e Recebido.*
 
 **Anote o número `TRF`. Use a busca global para abrir a transferência. Mostre origem, destino, quantidade e status. Depois mostre as movimentações relacionadas de Saída e Entrada.**
 
 *No banco do Salesforce, a transferência guarda o produto, a origem central, a loja de destino, a quantidade e o status. As movimentações registram a saída no central e a entrada na loja. Assim, front-end, back-end e persistência participam do mesmo fluxo.*
 
-### 8. Encerramento — 3:30 a 3:50
+### 9. Encerramento — 3:25 a 3:45
 
 **Volte à tela de Operações e deixe os cards com os saldos finais visíveis.**
 
